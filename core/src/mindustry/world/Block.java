@@ -374,10 +374,23 @@ public class Block extends UnlockableContent implements Senseable{
     /** How often to try dumping items in ticks, e.g. 5 = 12 times/sec*/
     protected final int dumpTime = 5;
 
+    /** If value is true, the block will be rescaled.*/
+    public boolean isRescaled = false;
+    /** The original size of the block in case of rescaling. The value the AI teams must use*/
+    public int originalSize;
+
     public Block(String name){
         super(name);
         initBuilding();
         selectionSize = 28f;
+        originalSize = size;
+    }
+
+    public void rescale() {
+        if (size != originalSize) { // TEMP retirer lui ou load() selon où est rescale()
+            region.scale = (float) size / originalSize;
+            isRescaled = true;
+        }
     }
 
     public void drawBase(Tile tile){
@@ -1234,6 +1247,14 @@ public class Block extends UnlockableContent implements Senseable{
         teamRegions = new TextureRegion[Team.all.length];
         for(Team team : Team.all){
             teamRegions[team.id] = teamRegion.found() && team.hasPalette ? Core.atlas.find(name + "-team-" + team.name, teamRegion) : teamRegion;
+            // Player(sharded) team id should be 1
+            if (player.team().id == team.id && originalSize != size) {
+                var
+                System.out.println(size + " - " + originalSize);
+            } else {
+                string name = this.getDisplayName();
+                size = originalSize;
+            }
         }
 
         if(variants != 0){
@@ -1250,6 +1271,7 @@ public class Block extends UnlockableContent implements Senseable{
                     variantShadowRegions[i] = Core.atlas.find(name + "-shadow" + (i + 1));
                 }
             }
+            rescale(); // TEMP pe placer en bas de la fonction
         }
     }
 

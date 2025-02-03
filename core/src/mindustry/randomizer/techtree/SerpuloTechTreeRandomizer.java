@@ -452,7 +452,7 @@ public abstract class SerpuloTechTreeRandomizer extends TechTreeRandomizer {
                 });
             });
 
-            apNode(createApLocation("Victory Serpulo", null, 998L,
+            apNode(createApLocation("Victory-Serpulo", null, 998L,
                     LocationResearchCost.reqVictorySerpulo()));
 
             apNode(createApLocation("AP-S-05-01", groundFactory, 124L), () -> {
