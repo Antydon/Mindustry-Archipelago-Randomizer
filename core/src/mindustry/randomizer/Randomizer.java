@@ -51,7 +51,7 @@ public class Randomizer {
     /**
      * Unlock a UnlockableContent.
      */
-    public void unlock(Long id, UnlockableContent content){
+    public void unlock(Long id, UnlockableContent content) {
         if (content != null) {
             if (worldState.isProgressive(id)) {
                 for (ProgressiveItem item : worldState.progressiveItems) {
@@ -66,15 +66,17 @@ public class Randomizer {
             content.quietUnlock();
         } else {
             //DEBUG
-            RandomizerMessageHandler.printErrorWithReason("Content that was null was called for unlock.");
+            RandomizerMessageHandler.printErrorWithReason("Content that was null was called for " +
+                    "unlock.");
         }
     }
 
     /**
      * Forward the check to Archipelago.
+     *
      * @param locationId The id of the location
      */
-    public void checkLocation(Long locationId){
+    public void checkLocation(Long locationId) {
         verifyVictoryConditions(locationId);
         boolean success = false;
         if (client.isConnected()) {
@@ -84,8 +86,8 @@ public class Randomizer {
         if (!client.isConnected() || !success) {
             //Check could not be send, added to check pending list.
             worldState.addCheck(worldState.checkPending, locationId);
-            RandomizerMessageHandler.printErrorWithReason("You are not connected, pending checks " +
-                    "will be sent when reconnecting to the game.");
+            RandomizerMessageHandler.printErrorWithReason("You are not connected, pending checks "
+                    + "will be sent when reconnecting to the game.");
         }
         //Add location to checked list and save world state.
         worldState.addCheck(worldState.locationsChecked, locationId);
@@ -97,8 +99,8 @@ public class Randomizer {
      */
     private void verifyVictoryConditions(Long locationId) {
         if (locationId - MINDUSTRY_BASE_ID == 998) { //Victory condition for Serpulo met.
-           settings.put(SERPULO_VICTORY.value, true);
-           RandomizerMessageHandler.printGoalCompleted(SERPULO, "Serpulo");
+            settings.put(SERPULO_VICTORY.value, true);
+            RandomizerMessageHandler.printGoalCompleted(SERPULO, "Serpulo");
         }
         if (locationId - MINDUSTRY_BASE_ID == 999) { //Victory condition for Erekir met.
             settings.put(EREKIR_VICTORY.value, true);
@@ -133,7 +135,7 @@ public class Randomizer {
     /**
      * Send pending location to Archipelago
      */
-    public void sendPendingLocations () {
+    public void sendPendingLocations() {
         boolean succes;
         sendLocalMessage("Reconnected, sending pending check...");
         int amountPending = worldState.checkPending.size();
@@ -148,23 +150,23 @@ public class Randomizer {
             worldState.saveStates();
             sendLocalMessage("All pending check has been sent!");
         } else { //Not every check has been sent.
-            RandomizerMessageHandler.printErrorWithReason("Pending check remaining. You can try " +
-                    "to send the checks again by reconnecting to Archipelago.");
+            RandomizerMessageHandler.printErrorWithReason("Pending check remaining. You can try " + "to send the checks again by reconnecting to Archipelago.");
         }
     }
 
     /**
      * Check if the item is a sector
+     *
      * @param id The id of the item
      * @return Return True if the item is a sector
      */
-    public boolean isSector(Long id){
-        return (id >= MINDUSTRY_BASE_ID + 138 && id <= MINDUSTRY_BASE_ID + 154) ||
-                (id >= MINDUSTRY_BASE_ID + 312 && id <= MINDUSTRY_BASE_ID + 327);
+    public boolean isSector(Long id) {
+        return (id >= MINDUSTRY_BASE_ID + 138 && id <= MINDUSTRY_BASE_ID + 154) || (id >= MINDUSTRY_BASE_ID + 312 && id <= MINDUSTRY_BASE_ID + 327);
     }
 
     /**
      * Return UnlockableContent matching the itemId.
+     *
      * @param itemId The itemId of the item.
      * @return The UnlockableContent matching the itemId, or null if no match.
      */
@@ -184,7 +186,7 @@ public class Randomizer {
         return content;
     }
 
-    public void sendDeathLink(String source, String cause){
+    public void sendDeathLink(String source, String cause) {
         if (client.isConnected() && worldState.options.getDeathLink() && !worldState.deathLinkDying) {
             DeathLink.SendDeathLink(source, cause);
         }
@@ -201,15 +203,16 @@ public class Randomizer {
 
     /**
      * Send a message locally
+     *
      * @param message The message to be sent.
      */
-    public void sendLocalMessage (String message) {
+    public void sendLocalMessage(String message) {
         if (Vars.ui.chatfrag != null) {
             Vars.ui.chatfrag.addLocalMessage(new APMessage(message));
         }
     }
 
-    public void sendLocalMessage (APMessage message) {
+    public void sendLocalMessage(APMessage message) {
         if (Vars.ui.chatfrag != null) {
             Vars.ui.chatfrag.addLocalMessage(message);
         }
@@ -217,9 +220,10 @@ public class Randomizer {
 
     /**
      * Send a message to Archipelago if connected.
+     *
      * @param message The message to be sent.
      */
-    public void sendArchipelagoMessage (String message) {
+    public void sendArchipelagoMessage(String message) {
         if (!message.isEmpty()) {
             client.sendChatMessage(message);
         }
@@ -227,6 +231,7 @@ public class Randomizer {
 
     /**
      * Verify if the player is allowed for a free launch.
+     *
      * @param sector The sector to launch to
      * @return Return True if the player can launch for free.
      */
@@ -252,6 +257,7 @@ public class Randomizer {
 
     /**
      * Verify if the sector is a valid sector for a free launch on Erekir
+     *
      * @param sector The sector to verify.
      * @return Return true if the sector is valid.
      */
@@ -267,6 +273,7 @@ public class Randomizer {
 
     /**
      * Verify if the sector is a valid sector for a free launch on Serpulo
+     *
      * @param sector The sector to verify.
      * @return Return true if the sector is valid.
      */
@@ -288,7 +295,7 @@ public class Randomizer {
     }
 
 
-    public Randomizer(){
+    public Randomizer() {
         this.hasConnectedPreviously = false;
         if (settings != null && settings.getBool(HAS_CONNECTED.value)) {
             this.hasConnectedPreviously = true;
@@ -303,13 +310,13 @@ public class Randomizer {
 
     /**
      * Check a location that was pending.
+     *
      * @param id The Id of the location
      * @return Return if the operation was a success.
      */
-    private boolean checkPendingLocation (Long id) {
+    private boolean checkPendingLocation(Long id) {
         return client.checkLocation(id);
     }
-
 
 
     /**
@@ -326,6 +333,9 @@ public class Randomizer {
             if (options.getLogisticDistribution() == 3) { //Starter logistics
                 MindustryOptions.applyStarterLogistics(options.getCampaign());
             }
+            //            if (true) {
+            MindustryOptions.applyRandomizerBlocks(options.getCampaign());
+            //            }
             switch (options.getCampaign()) {
                 case 0: //Serpulo
                     worldState.initializeSerpuloItems();
@@ -353,13 +363,13 @@ public class Randomizer {
                     throw new RuntimeException("Invalid CampaignType");
             }
         } else {
-            RandomizerMessageHandler.printErrorWithReason("Options was not filled, cannot apply " +
-                    "options");
+            RandomizerMessageHandler.printErrorWithReason("Options was not filled, cannot apply " + "options");
         }
     }
 
     /**
      * Process an event that the player received that is not a research.
+     *
      * @param event Event received from the client.
      */
     public void processEvent(ReceiveItemEvent event) {

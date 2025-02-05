@@ -37,16 +37,16 @@ public class RandomizedBlocks {
      */
     private static void fillBlocksSerpuloList(){
         //Core -- Maybe
-        blocksSerpulo.add(Blocks.coreShard);
-        blocksSerpulo.add(Blocks.coreFoundation);
-        blocksSerpulo.add(Blocks.coreNucleus);
+//        blocksSerpulo.add(Blocks.coreShard);
+//        blocksSerpulo.add(Blocks.coreFoundation);
+//        blocksSerpulo.add(Blocks.coreNucleus);
         //Rooting -- maybe
-        blocksSerpulo.add(Blocks.junction);
-        blocksSerpulo.add(Blocks.phaseConveyor);
-        blocksSerpulo.add(Blocks.sorter);
-        blocksSerpulo.add(Blocks.invertedSorter);
-        blocksSerpulo.add(Blocks.overflowGate);
-        blocksSerpulo.add(Blocks.underflowGate);
+//        blocksSerpulo.add(Blocks.junction);
+//        blocksSerpulo.add(Blocks.phaseConveyor);
+//        blocksSerpulo.add(Blocks.sorter);
+//        blocksSerpulo.add(Blocks.invertedSorter);
+//        blocksSerpulo.add(Blocks.overflowGate);
+//        blocksSerpulo.add(Blocks.underflowGate);
         blocksSerpulo.add(Blocks.massDriver);
         //Drills
         blocksSerpulo.add(Blocks.mechanicalDrill);
@@ -76,9 +76,9 @@ public class RandomizedBlocks {
         blocksSerpulo.add(Blocks.blastMixer);
         blocksSerpulo.add(Blocks.incinerator);
         //Liquids
-        blocksSerpulo.add(Blocks.liquidRouter);// maybe
-        blocksSerpulo.add(Blocks.liquidJunction);// maybe
-        blocksSerpulo.add(Blocks.phaseConduit);// maybe
+//        blocksSerpulo.add(Blocks.liquidRouter);// maybe
+//        blocksSerpulo.add(Blocks.liquidJunction);// maybe
+//        blocksSerpulo.add(Blocks.phaseConduit);// maybe
         blocksSerpulo.add(Blocks.liquidContainer);
         blocksSerpulo.add(Blocks.liquidTank);
         blocksSerpulo.add(Blocks.mechanicalPump);
@@ -113,7 +113,7 @@ public class RandomizedBlocks {
         blocksSerpulo.add(Blocks.surgeWallLarge);
         blocksSerpulo.add(Blocks.door);
         blocksSerpulo.add(Blocks.doorLarge);
-        //Unobranable Wall for giggles
+        //Unobtanable Wall for giggles
 //        normalBlocksSerpulo.add(Blocks.scrapWall);
 //        normalBlocksSerpulo.add(Blocks.scrapWallLarge);
 //        normalBlocksSerpulo.add(Blocks.scrapWallHuge);
@@ -170,8 +170,8 @@ public class RandomizedBlocks {
         blocksSerpulo.add(Blocks.illuminator);
         blocksSerpulo.add(Blocks.launchPad);
         //Payload Conveyor -- Maybe
-        blocksSerpulo.add(Blocks.payloadConveyor);
-        blocksSerpulo.add(Blocks.payloadRouter);
+//        blocksSerpulo.add(Blocks.payloadConveyor);
+//        blocksSerpulo.add(Blocks.payloadRouter);
     }
 
     /**

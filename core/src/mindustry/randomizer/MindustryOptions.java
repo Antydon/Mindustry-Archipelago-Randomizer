@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static arc.Core.settings;
+import static mindustry.Vars.player;
 import static mindustry.Vars.randomizer;
 import static mindustry.randomizer.enums.SettingStrings.*;
 
@@ -110,19 +111,14 @@ public class MindustryOptions {
     private boolean randomizeBlocksSize;
 
     /**
-     * Random for the block size options
-     */
-    private static Random randomizerForBlock;
-
-    /**
      * Minimun size for the random block size options
      */
-    private static int minBlocksSize;
+    private static int minBlocksSize = 1;
 
     /**
      * Maximum size for the random block size options
      */
-    private static int maxBlocksSize;
+    private static int maxBlocksSize = 4;
 
     public int getLogisticDistribution(){
         return this.logisticDistribution;
@@ -142,7 +138,7 @@ public class MindustryOptions {
 
     public boolean getRandomizeBlocksSize() {
         return this.randomizeBlocksSize;
-    }
+    } // TEMP pe pas utile
 
     /**
      * Verify if death link is enable but does not verify if it has been disabled on client side.
@@ -594,6 +590,9 @@ public class MindustryOptions {
                 settings.put(FREE_LAUNCH_EREKIR.value, true);
             }
         }
+        if(randomizeBlocksSize) {
+            verifyMinMaxBlocSize();
+        }
         settings.put(HAS_CONNECTED.value, true);
     }
 
@@ -615,30 +614,20 @@ public class MindustryOptions {
         this.amountOfResourcesRequired = settings.getInt(AMOUNT_OF_RESOURCES_REQUIRED.value);
         this.randomizeBlocksSize = false; // TEMP settings.getBool(RANDOMIZE_BLOCKS_SIZE.value);
 
-
         this.optionsFilled = true;
+        applyRandomizerBlocks(getCampaign());
         if(getCampaign() == 0){
             if (this.randomizeCoreUnitsWeapon){
                 randomizeSerpuloCoreUnitsWeapon(RandomizableCoreUnits.getPossibleCoreUnitsWeapons());
-            }
-            if (this.randomizeBlocksSize){
-                randomizeAllBlocksSerpulo();
             }
         } else if (getCampaign() == 1){
             if (this.randomizeCoreUnitsWeapon){
                 coreUnitAbilities = RandomizableCoreUnits.getPossibleCoreUnitsAbility();
             }
-            if (this.randomizeBlocksSize){
-                randomizeAllBlocksErekir();
-            }
         } else {
             if (this.randomizeCoreUnitsWeapon){
                 randomizeSerpuloCoreUnitsWeapon(RandomizableCoreUnits.getPossibleCoreUnitsWeapons());
                 coreUnitAbilities = RandomizableCoreUnits.getPossibleCoreUnitsAbility();
-            }
-            if (this.randomizeBlocksSize){
-                randomizeAllBlocksSerpulo();
-                randomizeAllBlocksErekir();
             }
         }
 
@@ -663,50 +652,55 @@ public class MindustryOptions {
     }
 
     /**
-     * Apply the faster production option to the selected campaign.
+     * Apply the randomize all block option to the selected campaign.
      *
      * @param campaign  The selected campaign.
-     * @param seedValue The seed of Archipelago randomizer truncated after the 7 first digit.
      */
-    protected static void applyRandomizerBlocks(int campaign, int seedValue) {
-        randomizerForBlock = new Random(1555555);
+    protected static void applyRandomizerBlocks(int campaign) {
+        Random random = new Random(settings.getInt(AP_SEED.value)); // new Random(seedValue);
         //randomizerForBlock.setSeed(seedValue);
         if (campaign == 0) { //Serpulo
-            randomizeAllBlocksSerpulo();
+            randomizeAllBlocksSerpulo(random);
         } else if (campaign == 1) { //Erekir
-            randomizeAllBlocksErekir();
+            randomizeAllBlocksErekir(random);
         } else if (campaign == 2) { //All
-            randomizeAllBlocksSerpulo();
-            randomizeAllBlocksErekir();
+            randomizeAllBlocksSerpulo(random);
+            randomizeAllBlocksErekir(random);
         }
     }
 
     /**
      * Apply the randomizer to all non-terrain blocks.
      */
-    private static void randomizeAllBlocksSerpulo() {
+    private static void randomizeAllBlocksSerpulo(Random random) {
+
         for (Block block : RandomizedBlocks.getBlocksSerpulo()) {
-            randomizeBlockSize(block);
+            randomizeBlockSize(block, random);
         }
     }
 
-    protected static void randomizeAllBlocksErekir() {
+    protected static void randomizeAllBlocksErekir(Random random) {
 //        for (Block block : RandomizedBlocks.getBlocksErekir()) {
 //            randomizeBlockSize(block);
 //        }
     }
 
-    private static void randomizeBlockSize(Block block) {
-        randomizeBlockSize(block, minBlocksSize, maxBlocksSize);
+    private static void randomizeBlockSize(Block block, Random random) {
+        block.originalSize = block.size;
+        if (minBlocksSize == maxBlocksSize) {
+            block.size = minBlocksSize;
+        } else {
+            block.size = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
+        }
     }
 
     //Randomize the Block category
-    private static void randomizeBlockSize(Block block, int min, int max) {
-        block.originalSize = block.size;
-        if (min == max) {
-            block.size = min;
-        } else {
-            block.size = (randomizerForBlock.nextInt(max - min) + min);
-        }
-    }
+//    private static void randomizeBlockSize(Block block, int min, int max, Random random) {
+//        block.originalSize = block.size;
+//        if (min == max) {
+//            block.size = min;
+//        } else {
+//            block.size = (random.nextInt(max - min) + min);
+//        }
+//    }
 }
