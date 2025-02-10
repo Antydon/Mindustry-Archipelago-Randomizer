@@ -703,7 +703,7 @@ public class Block extends UnlockableContent implements Senseable {
     /**
      * The original size of the block in case of rescaling. The value the AI teams must use
      */
-    public int originalSize = 1;
+    public int originalSize;
 
     public Block(String name) {
         super(name);
@@ -716,6 +716,7 @@ public class Block extends UnlockableContent implements Senseable {
         if (size != originalSize) { // TEMP retirer lui ou load() selon où est rescale()
             region.scale = (float) size / originalSize;
             teamRegion.scale = (float) size / originalSize;
+            // Should not be called on base block
             if (customShadow) {
                 customShadowRegion.scale = (float) size / originalSize;
             }
@@ -1070,6 +1071,9 @@ public class Block extends UnlockableContent implements Senseable {
                 (!valid ? 0.4f : 0.24f) + Mathf.absin(Time.globalTime, 6f, 0.28f));
         Draw.alpha(alpha);
         float prevScale = Draw.scl;
+        if(teamRegions[player.team().id].equals(teamRegion)) {
+            Draw.scl = (float) size / originalSize;
+        }
         Draw.scl *= plan.animScale;
         drawPlanRegion(plan, list);
         Draw.scl = prevScale;
@@ -1573,7 +1577,6 @@ public class Block extends UnlockableContent implements Senseable {
             flags = flags.with(BlockFlag.hasFogRadius);
         }
 
-
         //initialize default health based on size
         if (health == -1) {
             boolean round = false;
@@ -1606,6 +1609,7 @@ public class Block extends UnlockableContent implements Senseable {
         if (group == BlockGroup.transportation || category == Category.distribution) {
             acceptsItems = true;
         }
+
 
         offset = ((size + 1) % 2) * tilesize / 2f;
         sizeOffset = -((size - 1) / 2);
@@ -1689,16 +1693,6 @@ public class Block extends UnlockableContent implements Senseable {
                 for (int i = 0; i < variants; i++) {
                     variantShadowRegions[i] = Core.atlas.find(name + "-shadow" + (i + 1));
                 }
-            }
-        }
-        ContentLoader contentLoader = new ContentLoader();
-        if (RandomizedBlocks.getBlocksSerpulo().stream().anyMatch(b -> b.name.equalsIgnoreCase(this.name))) {
-            // Player(sharded) team id should be 1
-            if (this.teamRegions[player.team().id].equals(teamRegion)) {
-                rescale(); // TEMP pe placer en bas de la fonction
-                System.out.println(name + ": " + size + "-" + originalSize);
-            } else {
-                // TODO
             }
         }
     }

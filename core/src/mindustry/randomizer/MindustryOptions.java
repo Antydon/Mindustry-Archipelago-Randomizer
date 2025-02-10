@@ -630,7 +630,6 @@ public class MindustryOptions {
                 coreUnitAbilities = RandomizableCoreUnits.getPossibleCoreUnitsAbility();
             }
         }
-
     }
 
     /**
