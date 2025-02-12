@@ -633,8 +633,8 @@ public class MindustryOptions {
     }
 
     /**
-     * Verify if the values of minBlockSize and maxBlockSize are positive and minSize is not higher
-     * than maxSize
+     * Verify if the values of minBlockSize and maxBlockSize are above 0 and maxBlockSize is higher
+     * than minBlockSize
      */
     private void verifyMinMaxBlocSize() {
         if (minBlocksSize <= 0) {
@@ -669,21 +669,26 @@ public class MindustryOptions {
     }
 
     /**
-     * Apply the randomizer to all non-terrain blocks.
+     * Apply the randomizer to all non-terrain blocks in Serpulo.
      */
     private static void randomizeAllBlocksSerpulo(Random random) {
-
         for (Block block : RandomizedBlocks.getBlocksSerpulo()) {
             randomizeBlockSize(block, random);
         }
     }
 
+    /**
+     * Apply the randomizer to all non-terrain blocks in Erekir.
+     */
     protected static void randomizeAllBlocksErekir(Random random) {
 //        for (Block block : RandomizedBlocks.getBlocksErekir()) {
 //            randomizeBlockSize(block);
 //        }
     }
 
+    /**
+     *  Method to change the size of the block between minBlockSize and maxBlockSize
+     */
     private static void randomizeBlockSize(Block block, Random random) {
         block.originalSize = block.size;
         if (minBlocksSize == maxBlocksSize) {
@@ -692,14 +697,4 @@ public class MindustryOptions {
             block.size = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
         }
     }
-
-    //Randomize the Block category
-//    private static void randomizeBlockSize(Block block, int min, int max, Random random) {
-//        block.originalSize = block.size;
-//        if (min == max) {
-//            block.size = min;
-//        } else {
-//            block.size = (random.nextInt(max - min) + min);
-//        }
-//    }
 }

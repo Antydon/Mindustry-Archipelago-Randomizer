@@ -714,18 +714,20 @@ public class Block extends UnlockableContent implements Senseable {
         super(name);
         initBuilding();
         selectionSize = 28f;
-        originalSize = size;
     }
 
     public void rescale() {
-        if (size != originalSize) { return; } // TEMP retirer lui ou load() selon où est rescale()
-            region.scale = randomScale;
-            teamRegion.scale = randomScale;
-            // Should not be called on base block
-            if (customShadow) {
-                customShadowRegion.scale = randomScale;
-            }
-            isRescaled = true; // pe placer avant le if return;
+        // isRescaled = true; // pe placer avant le if return;
+        if (size == originalSize) {
+            return;
+        } // TEMP retirer lui ou load() selon où est rescale()
+        region.scale = randomScale;
+        teamRegion.scale = randomScale;
+        // Should not be called on base block
+        if (customShadow) {
+            customShadowRegion.scale = randomScale;
+        }
+
     }
 
     public void drawBase(Tile tile) {

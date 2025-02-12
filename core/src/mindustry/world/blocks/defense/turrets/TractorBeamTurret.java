@@ -49,10 +49,10 @@ public class TractorBeamTurret extends BaseTurret{
 
     public void rescale() {
         super.rescale();
-        baseRegion.scale = (float) size / originalSize;
-        laser.scale = (float) size / originalSize;
-        laserStart.scale = (float) size / originalSize;
-        laserEnd.scale = (float) size / originalSize;
+        baseRegion.scale = randomScale;
+        laser.scale = randomScale;
+        laserStart.scale = randomScale;
+        laserEnd.scale = randomScale;
     }
 
     @Override

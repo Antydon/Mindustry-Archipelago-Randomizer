@@ -38,7 +38,7 @@ public class LightBlock extends Block{
 
     public void rescale() {
         super.rescale();
-        topRegion.scale = (float) size / originalSize;
+        topRegion.scale = randomScale;
     }
 
     @Override

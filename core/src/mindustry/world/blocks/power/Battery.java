@@ -35,7 +35,7 @@ public class Battery extends PowerDistributor{
 
     public void rescale() {
         super.rescale();
-        topRegion.scale = (float) size / originalSize;
+        topRegion.scale = randomScale;
     }
 
     @Override

@@ -233,7 +233,7 @@ public class Tile implements Position, QuadTreeObject, Displayable{
         }
 
         int prevSize = block.size;
-        if (!(team.id == player.team().id)){
+        if (team.id != player.team().id){
             block.size = block.originalSize;
         }
 
