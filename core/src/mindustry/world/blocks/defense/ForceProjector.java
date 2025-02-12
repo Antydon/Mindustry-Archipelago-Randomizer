@@ -73,6 +73,11 @@ public class ForceProjector extends Block{
         }
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+    }
+
     @Override
     public void init(){
         updateClipRadius(radius + phaseRadiusBoost + 3f);

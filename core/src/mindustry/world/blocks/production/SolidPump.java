@@ -35,6 +35,11 @@ public class SolidPump extends Pump{
         envEnabled = Env.terrestrial;
     }
 
+    public void rescale() {
+        super.rescale();
+        rotatorRegion.scale = randomScale;
+    }
+
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid){
         drawPotentialLinks(x, y);

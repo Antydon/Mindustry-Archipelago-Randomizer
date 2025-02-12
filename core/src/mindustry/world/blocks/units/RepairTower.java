@@ -30,6 +30,11 @@ public class RepairTower extends Block{
         solid = true;
     }
 
+    public void rescale() {
+        super.rescale();
+        glow.scale = randomScale;
+    }
+
     @Override
     public void setStats(){
         super.setStats();

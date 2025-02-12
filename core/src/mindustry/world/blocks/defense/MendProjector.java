@@ -41,6 +41,11 @@ public class MendProjector extends Block{
         envEnabled |= Env.space;
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+    }
+
     @Override
     public boolean outputsItems(){
         return false;

@@ -57,6 +57,15 @@ public class UnitAssembler extends PayloadBlock{
         quickRotate = false;
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+        outRegion.scale =randomScale;
+        inRegion.scale = randomScale;
+        sideRegion1.scale = randomScale;
+        sideRegion2.scale = randomScale;
+    }
+
     public Rect getRect(Rect rect, float x, float y, int rotation){
         rect.setCentered(x, y, areaSize * tilesize);
         float len = tilesize * (areaSize + size)/2f;

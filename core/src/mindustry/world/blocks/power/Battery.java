@@ -33,6 +33,11 @@ public class Battery extends PowerDistributor{
         update = false;
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = (float) size / originalSize;
+    }
+
     @Override
     public void init(){
         super.init();

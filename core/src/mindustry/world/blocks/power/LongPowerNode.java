@@ -18,6 +18,11 @@ public class LongPowerNode extends PowerNode{
         drawRange = false;
     }
 
+    public void rescale() {
+        super.rescale();
+        glow.scale = (float) size / originalSize;
+    }
+
     @Override
     public void load(){
         super.load();

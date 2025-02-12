@@ -25,6 +25,12 @@ public class ItemIncinerator extends Block{
         solid = true;
     }
 
+    public void rescale() {
+        super.rescale();
+        liquidRegion.scale = randomScale;
+        topRegion.scale = randomScale;
+    }
+
     @Override
     public TextureRegion[] icons(){
         return new TextureRegion[]{region, topRegion};

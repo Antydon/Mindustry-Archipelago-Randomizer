@@ -28,6 +28,15 @@ public class UnitAssemblerModule extends PayloadBlock{
         acceptsPayload = true;
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+        outRegion.scale =randomScale;
+        inRegion.scale = randomScale;
+        sideRegion1.scale = randomScale;
+        sideRegion2.scale = randomScale;
+    }
+
     @Override
     public void setStats(){
         super.setStats();

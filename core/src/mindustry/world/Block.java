@@ -703,7 +703,12 @@ public class Block extends UnlockableContent implements Senseable {
     /**
      * The original size of the block in case of rescaling. The value the AI teams must use
      */
-    public int originalSize;
+    public int originalSize = 1;
+
+    /**
+     * The ratio of the new scale to calculate.
+     */
+    public float randomScale = (float) size / originalSize;
 
     public Block(String name) {
         super(name);
@@ -713,15 +718,14 @@ public class Block extends UnlockableContent implements Senseable {
     }
 
     public void rescale() {
-        if (size != originalSize) { // TEMP retirer lui ou load() selon où est rescale()
-            region.scale = (float) size / originalSize;
-            teamRegion.scale = (float) size / originalSize;
+        if (size != originalSize) { return; } // TEMP retirer lui ou load() selon où est rescale()
+            region.scale = randomScale;
+            teamRegion.scale = randomScale;
             // Should not be called on base block
             if (customShadow) {
-                customShadowRegion.scale = (float) size / originalSize;
+                customShadowRegion.scale = randomScale;
             }
-            isRescaled = true;
-        }
+            isRescaled = true; // pe placer avant le if return;
     }
 
     public void drawBase(Tile tile) {
@@ -1071,9 +1075,6 @@ public class Block extends UnlockableContent implements Senseable {
                 (!valid ? 0.4f : 0.24f) + Mathf.absin(Time.globalTime, 6f, 0.28f));
         Draw.alpha(alpha);
         float prevScale = Draw.scl;
-        if(teamRegions[player.team().id].equals(teamRegion)) {
-            Draw.scl = (float) size / originalSize;
-        }
         Draw.scl *= plan.animScale;
         drawPlanRegion(plan, list);
         Draw.scl = prevScale;

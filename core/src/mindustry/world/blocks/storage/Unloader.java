@@ -41,6 +41,11 @@ public class Unloader extends Block{
         configClear((UnloaderBuild tile) -> tile.sortItem = null);
     }
 
+    public void rescale() {
+        super.rescale();
+        centerRegion.scale = randomScale;
+    }
+
     @Override
     public void setStats(){
         super.setStats();

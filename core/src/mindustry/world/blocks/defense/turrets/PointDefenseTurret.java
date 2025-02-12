@@ -42,6 +42,11 @@ public class PointDefenseTurret extends ReloadTurret{
         coolantMultiplier = 2f;
     }
 
+    public void rescale() {
+        super.rescale();
+        baseRegion.scale = (float) size / originalSize;
+    }
+
     @Override
     public TextureRegion[] icons(){
         return new TextureRegion[]{baseRegion, region};

@@ -63,6 +63,12 @@ public class NuclearReactor extends PowerGenerator{
         explodeSound = Sounds.explosionbig;
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+        lightsRegion.scale = randomScale;
+    }
+
     @Override
     public void setStats(){
         super.setStats();

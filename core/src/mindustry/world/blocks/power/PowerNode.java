@@ -101,6 +101,12 @@ public class PowerNode extends PowerBlock{
         });
     }
 
+    public void rescale() {
+        super.rescale();
+        laser.scale = randomScale;
+        laserEnd.scale = randomScale;
+    }
+
     @Override
     public void setBars(){
         super.setBars();

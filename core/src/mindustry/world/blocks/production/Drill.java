@@ -86,6 +86,14 @@ public class Drill extends Block{
         flags = EnumSet.of(BlockFlag.drill);
     }
 
+    public void rescale() {
+        super.rescale();
+        rimRegion.scale = randomScale;
+        rotatorRegion.scale = randomScale;
+        topRegion.scale = randomScale;
+        itemRegion.scale = randomScale;
+    }
+
     @Override
     public void init(){
         super.init();

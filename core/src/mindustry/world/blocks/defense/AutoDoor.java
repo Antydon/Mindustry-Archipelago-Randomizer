@@ -41,6 +41,11 @@ public class AutoDoor extends Wall{
         drawDisabled = true;
     }
 
+    public void rescale() {
+        super.rescale();
+        openRegion.scale = randomScale;
+    }
+
     @Remote(called = Loc.server)
     public static void autoDoorToggle(Tile tile, boolean open){
         if(tile == null || !(tile.build instanceof AutoDoorBuild build)) return;

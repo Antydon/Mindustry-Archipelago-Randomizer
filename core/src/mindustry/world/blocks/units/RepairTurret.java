@@ -64,6 +64,15 @@ public class RepairTurret extends Block{
         envEnabled |= Env.space;
     }
 
+    public void rescale() {
+        super.rescale();
+        baseRegion.scale = randomScale;
+        laser.scale = randomScale;
+        laserEnd.scale = randomScale;
+        laserTop.scale = randomScale;
+        laserTopEnd.scale = randomScale;
+    }
+
     @Override
     public void setStats(){
         super.setStats();

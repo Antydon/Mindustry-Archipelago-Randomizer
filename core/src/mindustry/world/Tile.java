@@ -232,8 +232,13 @@ public class Tile implements Position, QuadTreeObject, Displayable{
             build.team(team);
         }
 
+        int prevSize = block.size;
+        if (!(team.id == player.team().id)){
+            block.size = block.originalSize;
+        }
+
         //set up multiblock
-        if(block.isMultiblock()){
+        if(block.isMultiblock() ){
             int offset = -(block.size - 1) / 2;
             Building entity = this.build;
             Block block = this.block;
@@ -263,10 +268,10 @@ public class Tile implements Position, QuadTreeObject, Displayable{
                     }
                 }
             }
-
             this.build = entity;
             this.block = block;
         }
+        this.block.size = prevSize;
 
         changed();
         changing = false;

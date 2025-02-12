@@ -68,6 +68,21 @@ public class PayloadMassDriver extends PayloadBlock{
         config(Integer.class, (PayloadDriverBuild tile, Integer point) -> tile.link = point);
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = randomScale;
+        outRegion.scale = randomScale;
+        inRegion.scale = randomScale;
+        baseRegion.scale = randomScale;
+        capRegion.scale = randomScale;
+        leftRegion.scale = randomScale;
+        rightRegion.scale = randomScale;
+        capOutlineRegion.scale = randomScale;
+        leftOutlineRegion.scale = randomScale;
+        rightOutlineRegion.scale = randomScale;
+        arrow.scale = randomScale;
+    }
+
     @Override
     public void init(){
         super.init();

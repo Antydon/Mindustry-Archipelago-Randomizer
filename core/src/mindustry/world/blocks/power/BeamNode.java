@@ -40,6 +40,13 @@ public class BeamNode extends PowerBlock{
         priority = TargetPriority.transport;
     }
 
+    public void rescale() {
+        super.rescale();
+        laser.scale = (float) size / originalSize;
+        laserEnd.scale = (float) size / originalSize;
+    }
+
+
     @Override
     public void setBars(){
         super.setBars();

@@ -47,6 +47,14 @@ public class TractorBeamTurret extends BaseTurret{
         envEnabled |= Env.space;
     }
 
+    public void rescale() {
+        super.rescale();
+        baseRegion.scale = (float) size / originalSize;
+        laser.scale = (float) size / originalSize;
+        laserStart.scale = (float) size / originalSize;
+        laserEnd.scale = (float) size / originalSize;
+    }
+
     @Override
     public TextureRegion[] icons(){
         return new TextureRegion[]{baseRegion, region};

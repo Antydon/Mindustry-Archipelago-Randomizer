@@ -26,6 +26,12 @@ public class PowerDiode extends Block{
         envEnabled |= Env.space;
     }
 
+    public void rescale() {
+        super.rescale();
+        arrow.scale = randomScale;
+    }
+
+
     @Override
     public void setBars(){
         super.setBars();

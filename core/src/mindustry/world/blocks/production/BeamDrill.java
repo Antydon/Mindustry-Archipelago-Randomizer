@@ -72,6 +72,18 @@ public class BeamDrill extends Block{
         flags = EnumSet.of(BlockFlag.drill);
     }
 
+    public void rescale() {
+        super.rescale();
+        laser.scale = randomScale;
+        laserEnd.scale = randomScale;
+        laserCenter.scale = randomScale;
+        laserBoost.scale = randomScale;
+        laserEndBoost.scale = randomScale;
+        laserCenterBoost.scale = randomScale;
+        topRegion.scale = randomScale;
+        glowRegion.scale = randomScale;
+    }
+
     @Override
     public void init(){
         updateClipRadius((range + 2) * tilesize);

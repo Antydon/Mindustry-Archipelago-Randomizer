@@ -50,6 +50,11 @@ public class Door extends Wall{
         });
     }
 
+    public void rescale() {
+        super.rescale();
+        openRegion.scale = randomScale;
+    }
+
     @Override
     public TextureRegion getPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         return plan.config == Boolean.TRUE ? openRegion : region;

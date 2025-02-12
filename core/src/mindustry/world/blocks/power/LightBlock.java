@@ -36,6 +36,11 @@ public class LightBlock extends Block{
         config(Integer.class, (LightBuild tile, Integer value) -> tile.color = value);
     }
 
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = (float) size / originalSize;
+    }
+
     @Override
     public void init(){
         lightRadius = radius*2.5f;
