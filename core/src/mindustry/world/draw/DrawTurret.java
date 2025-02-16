@@ -58,11 +58,17 @@ public class DrawTurret extends DrawBlock {
         TurretBuild tb = (TurretBuild) build;
 
         if (build.team().id == player.team().id) {
-                turret.size = turret.randomizeSize;
-                turret.rescale();
+            turret.size = turret.randomizeSize;
+            turret.rescale();
+            base.scale = turret.randomScale;
+            liquid.scale = turret.randomScale;
+            top.scale = turret.randomScale;
         } else {
             if (turret.isRescaled) {
                 turret.size = turret.originalSize;
+                base.scale = 1f;
+                liquid.scale = 1f;
+                top.scale = 1f;
                 turret.isRescaled = false;
             }
         }
@@ -105,11 +111,6 @@ public class DrawTurret extends DrawBlock {
     }
 
     public void drawTurret(Turret block, TurretBuild build) {
-        if (build.team.id == player.team().id) {
-
-            liquid.scale = block.randomScale;
-            top.scale = block.randomScale;
-        }
 
         if (block.region.found()) {
             Draw.rect(block.region, build.x + build.recoilOffset.x,

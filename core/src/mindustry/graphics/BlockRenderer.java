@@ -446,12 +446,14 @@ public class BlockRenderer {
                 if (build.team().id == pteam.id) {
                     if (!block.isRescaled) {
                         build.block.size = build.block.randomizeSize;
+                        build.block.isRescaled = true;
                         build.block.rescale();
                     }
                 } else {
                     if (block.isRescaled) {
                         build.block.size = build.block.originalSize;
                         block.isRescaled = false;
+                        build.block.rescale();
                     }
                 }
             }

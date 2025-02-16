@@ -722,18 +722,15 @@ public class Block extends UnlockableContent implements Senseable {
     }
 
     public void rescale() {
-        isRescaled = true;
-        if (size == originalSize) {
-            return;
-        }
+        if (randomizeSize == originalSize) { return; }
         if(randomScale == 0) {
             randomScale = (float) randomizeSize / originalSize;
         }
-        region.scale = randomScale;
-        teamRegion.scale = randomScale;
+        region.scale =  isRescaled ? randomScale : 1f;
+        teamRegion.scale = isRescaled ? randomScale : 1f;
         // Should not be called on base block
         if (customShadow) {
-            customShadowRegion.scale = randomScale;
+            customShadowRegion.scale =  isRescaled ? randomScale : 1f;
         }
     }
 
