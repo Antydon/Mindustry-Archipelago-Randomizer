@@ -692,9 +692,9 @@ public class MindustryOptions {
     private static void randomizeBlockSize(Block block, Random random) {
         block.originalSize = block.size;
         if (minBlocksSize == maxBlocksSize) {
-            block.size = minBlocksSize;
+            block.randomizeSize = minBlocksSize;
         } else {
-            block.size = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
+            block.randomizeSize = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
         }
     }
 }

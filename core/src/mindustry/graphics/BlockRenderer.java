@@ -442,6 +442,20 @@ public class BlockRenderer {
             Block block = tile.block();
             Building build = tile.build;
 
+            if (build != null) {
+                if (build.team().id == pteam.id) {
+                    if (!block.isRescaled) {
+                        build.block.size = build.block.randomizeSize;
+                        build.block.rescale();
+                    }
+                } else {
+                    if (block.isRescaled) {
+                        build.block.size = build.block.originalSize;
+                        block.isRescaled = false;
+                    }
+                }
+            }
+
             Draw.z(Layer.block);
 
             boolean visible = (build == null || !build.inFogTo(pteam));
@@ -459,14 +473,6 @@ public class BlockRenderer {
                 }
 
                 if (build != null) {
-                    if (!block.isRescaled) {
-                        if (build.team().id == pteam.id) {
-                            block.rescale();
-                        } else {
-                            block.size = block.originalSize;
-                        }
-                        build.block.isRescaled = true;
-                    }
 
                     if (visible) {
                         build.visibleFlags |= (1L << pteam.id);

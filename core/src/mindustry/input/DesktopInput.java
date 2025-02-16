@@ -531,6 +531,7 @@ public class DesktopInput extends InputHandler{
         }
 
         if(splan != null){
+
             float offset = ((splan.block.size + 2) % 2) * tilesize / 2f;
             float x = Core.input.mouseWorld().x + offset;
             float y = Core.input.mouseWorld().y + offset;

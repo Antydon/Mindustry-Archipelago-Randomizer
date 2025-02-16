@@ -706,9 +706,14 @@ public class Block extends UnlockableContent implements Senseable {
     public int originalSize = 1;
 
     /**
+     * The original size of the block in case of rescaling. The value the AI teams must use
+     */
+    public int randomizeSize = 1;
+
+    /**
      * The ratio of the new scale to calculate.
      */
-    public float randomScale = (float) size / originalSize;
+    public float randomScale = 0;
 
     public Block(String name) {
         super(name);
@@ -717,17 +722,19 @@ public class Block extends UnlockableContent implements Senseable {
     }
 
     public void rescale() {
-        // isRescaled = true; // pe placer avant le if return;
+        isRescaled = true;
         if (size == originalSize) {
             return;
-        } // TEMP retirer lui ou load() selon où est rescale()
+        }
+        if(randomScale == 0) {
+            randomScale = (float) randomizeSize / originalSize;
+        }
         region.scale = randomScale;
         teamRegion.scale = randomScale;
         // Should not be called on base block
         if (customShadow) {
             customShadowRegion.scale = randomScale;
         }
-
     }
 
     public void drawBase(Tile tile) {
@@ -1072,6 +1079,9 @@ public class Block extends UnlockableContent implements Senseable {
     }
 
     public void drawPlan(BuildPlan plan, Eachable<BuildPlan> list, boolean valid, float alpha) {
+        this.size = this.randomizeSize;
+        offset = ((size + 1) % 2) * tilesize / 2f;
+        sizeOffset = -((size - 1) / 2);
         Draw.reset();
         Draw.mixcol(!valid ? Pal.breakInvalid : Color.white,
                 (!valid ? 0.4f : 0.24f) + Mathf.absin(Time.globalTime, 6f, 0.28f));
@@ -1671,8 +1681,9 @@ public class Block extends UnlockableContent implements Senseable {
 
         region = Core.atlas.find(name);
         if (!RandomizedBlocks.getBlocksSerpulo().stream().anyMatch(b -> b.name.equalsIgnoreCase(this.name))) {
-            originalSize = size;
+            randomizeSize = size;
         }
+        originalSize = size;
         ContentRegions.loadRegions(this);
 
 

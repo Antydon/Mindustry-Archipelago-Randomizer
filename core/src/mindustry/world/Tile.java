@@ -232,10 +232,13 @@ public class Tile implements Position, QuadTreeObject, Displayable{
             build.team(team);
         }
 
-        int prevSize = block.size;
-        if (team.id != player.team().id){
+        if (team.id == player.team().id){
+            block.size = block.randomizeSize;
+        } else {
             block.size = block.originalSize;
         }
+
+        int prevSize = block.size;
 
         //set up multiblock
         if(block.isMultiblock() ){
