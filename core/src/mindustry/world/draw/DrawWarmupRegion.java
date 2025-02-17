@@ -15,6 +15,11 @@ public class DrawWarmupRegion extends DrawBlock{
     public TextureRegion region;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        region.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
 
     }

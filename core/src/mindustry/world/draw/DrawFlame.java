@@ -29,6 +29,11 @@ public class DrawFlame extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        top.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         if(build.warmup() > 0f && flameColor.a > 0.001f){
             float g = 0.3f;

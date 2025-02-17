@@ -44,7 +44,7 @@ public class PointDefenseTurret extends ReloadTurret{
 
     public void rescale() {
         super.rescale();
-        baseRegion.scale = randomScale;
+        baseRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

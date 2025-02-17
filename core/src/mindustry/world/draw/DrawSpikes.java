@@ -11,11 +11,19 @@ public class DrawSpikes extends DrawBlock{
     public float stroke = 2f, rotateSpeed = 0.8f;
     public float radius = 6f, length = 4f, x = 0f, y = 0f, layerSpeed = -1f;
 
+    public float originalRadius = 0f;
+
     public DrawSpikes(Color color){
         this.color = color;
     }
 
     public DrawSpikes(){
+    }
+
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        if (originalRadius == 0f) originalRadius = radius;
+        radius = isRescaled ? randomScale * originalRadius : originalRadius;
     }
 
     @Override

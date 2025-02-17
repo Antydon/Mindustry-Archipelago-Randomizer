@@ -25,6 +25,11 @@ public class DrawPulseShape extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        radiusScl = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         float pz = Draw.z();
         if(layer > 0) Draw.z(layer);

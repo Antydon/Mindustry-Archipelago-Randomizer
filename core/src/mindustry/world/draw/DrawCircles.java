@@ -14,11 +14,21 @@ public class DrawCircles extends DrawBlock{
     public float radius = 12f, radiusOffset = 0f, x = 0f, y = 0f;
     public Interp strokeInterp = Interp.pow3In;
 
+    float originalRadius = 0f;
+
     public DrawCircles(Color color){
         this.color = color;
     }
 
     public DrawCircles(){
+    }
+
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        if (originalRadius == 0f){
+            originalRadius = radius;
+        }
+        radius = isRescaled ? randomScale * originalRadius : originalRadius;
     }
 
     @Override

@@ -21,6 +21,9 @@ public abstract class DrawPart{
     public abstract void load(String name);
     public void getOutlines(Seq<TextureRegion> out){}
 
+    /** Change TextureRegion scale to for the block randomizer. */
+    public void rescale(Boolean isRescaled, float randomScale){}
+
     /** Parameters for drawing a part in draw(). */
     public static class PartParams{
         //TODO document

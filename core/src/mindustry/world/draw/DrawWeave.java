@@ -11,6 +11,12 @@ import mindustry.world.*;
 public class DrawWeave extends DrawBlock{
     public TextureRegion weave;
 
+
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        weave.scale = isRescaled ? randomScale: 1f;
+    }
+
     @Override
     public void draw(Building build){
         Draw.rect(weave, build.x, build.y, build.totalProgress());

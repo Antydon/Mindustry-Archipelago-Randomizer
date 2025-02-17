@@ -21,6 +21,11 @@ public class DrawLiquidRegion extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        liquid.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Liquid drawn = drawLiquid != null ? drawLiquid : build.liquids.current();
         Drawf.liquid(liquid, build.x, build.y,

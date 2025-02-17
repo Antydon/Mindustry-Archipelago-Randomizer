@@ -26,6 +26,11 @@ public class DrawHeatInput extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        heat.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
     }
 

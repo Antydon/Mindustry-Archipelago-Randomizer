@@ -29,6 +29,11 @@ public class DrawHeatRegion extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        heat.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Draw.z(Layer.blockAdditive);
         if(build instanceof HeatCrafterBuild hc && hc.heat > 0){

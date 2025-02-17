@@ -28,6 +28,14 @@ public class DrawHeatOutput extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        heat.scale = isRescaled ? randomScale : 1f;
+        glow.scale = isRescaled ? randomScale : 1f;
+        top1.scale = isRescaled ? randomScale : 1f;
+        top2.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         float rotdeg = (build.rotation + rotOffset) * 90;
         Draw.rect(Mathf.mod((build.rotation + rotOffset), 4) > 1 ? top2 : top1, build.x, build.y, rotdeg);

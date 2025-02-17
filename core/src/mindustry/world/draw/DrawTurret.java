@@ -38,6 +38,18 @@ public class DrawTurret extends DrawBlock {
 
     public DrawTurret() {
     }
+    
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        base.scale = isRescaled ? randomScale : 1f;
+        liquid.scale = isRescaled ? randomScale : 1f;
+        top.scale = isRescaled ? randomScale : 1f;
+        preview.scale = isRescaled ? randomScale : 1f;
+        outline.scale = isRescaled ? randomScale : 1f;
+        for (int i = 0; i < parts.size; i ++) {
+            parts.get(i).rescale(isRescaled, randomScale);
+        }
+    }
 
     @Override
     public void getRegionsToOutline(Block block, Seq<TextureRegion> out) {
@@ -56,22 +68,6 @@ public class DrawTurret extends DrawBlock {
     public void draw(Building build) {
         Turret turret = (Turret) build.block;
         TurretBuild tb = (TurretBuild) build;
-
-        if (build.team().id == player.team().id) {
-            turret.size = turret.randomizeSize;
-            turret.rescale();
-            base.scale = turret.randomScale;
-            liquid.scale = turret.randomScale;
-            top.scale = turret.randomScale;
-        } else {
-            if (turret.isRescaled) {
-                turret.size = turret.originalSize;
-                base.scale = 1f;
-                liquid.scale = 1f;
-                top.scale = 1f;
-                turret.isRescaled = false;
-            }
-        }
 
         Draw.rect(base, build.x, build.y);
         Draw.color();

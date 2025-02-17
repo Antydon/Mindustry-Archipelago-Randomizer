@@ -59,6 +59,12 @@ public class RegionPart extends DrawPart{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        xScl = isRescaled ? randomScale : 1f;
+        yScl = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(PartParams params){
         float z = Draw.z();
         if(layer > 0) Draw.z(layer);

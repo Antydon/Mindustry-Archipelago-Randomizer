@@ -22,6 +22,13 @@ public class DrawPistons extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        regiont.scale = isRescaled ? randomScale : 1f;
+        region1.scale = isRescaled ? randomScale : 1f;
+        region2.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         for(int i = 0; i < sides; i++){
             float len = Mathf.absin(build.totalProgress() + sinOffset + sideOffset * sinScl * i, sinScl, sinMag) + lenOffset;

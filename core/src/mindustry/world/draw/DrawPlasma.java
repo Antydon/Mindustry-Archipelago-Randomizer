@@ -17,6 +17,13 @@ public class DrawPlasma extends DrawFlame{
     public Color plasma1 = Color.valueOf("ffd06b"), plasma2 = Color.valueOf("ff361b");
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        for(TextureRegion region : regions){
+            region.scale = isRescaled ? randomScale : 1f;
+        }
+    }
+
+    @Override
     public void load(Block block){
         regions = new TextureRegion[plasmas];
         for(int i = 0; i < regions.length; i++){

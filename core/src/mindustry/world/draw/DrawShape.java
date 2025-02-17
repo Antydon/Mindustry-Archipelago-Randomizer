@@ -11,6 +11,14 @@ public class DrawShape extends DrawBlock{
     public float radius = 2f, timeScl = 1f, layer = -1f, x, y;
     public boolean useWarmupRadius = false;
 
+    float originalRadius = 0f;
+
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        if(originalRadius == 0f) originalRadius = radius;
+        radius = isRescaled ? randomScale * originalRadius : originalRadius;
+    }
+
     @Override
     public void draw(Building build){
         float pz = Draw.z();

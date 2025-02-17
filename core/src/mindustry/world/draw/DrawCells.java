@@ -17,6 +17,11 @@ public class DrawCells extends DrawBlock{
     public float range = 4f, recurrence = 2f, radius = 1.8f, lifetime = 60f * 3f;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        middle.scale = isRescaled ? randomScale: 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Drawf.liquid(middle, build.x, build.y, build.warmup(), color);
 

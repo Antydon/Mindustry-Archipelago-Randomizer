@@ -20,6 +20,11 @@ public class DrawCultivator extends DrawBlock{
     public TextureRegion middle;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        middle.scale = isRescaled ? randomScale: 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Drawf.liquid(middle, build.x, build.y, build.warmup(), plantColor);
 

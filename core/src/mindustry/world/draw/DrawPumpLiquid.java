@@ -11,6 +11,11 @@ public class DrawPumpLiquid extends DrawBlock{
     public TextureRegion liquid;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        liquid = isRescaled ? new TextureRegion(liquid) : null;
+    }
+
+    @Override
     public void draw(Building build){
         if(!(build instanceof PumpBuild pump) || pump.liquidDrop == null) return;
 

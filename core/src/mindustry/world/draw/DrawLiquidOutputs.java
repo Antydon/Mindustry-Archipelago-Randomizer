@@ -13,6 +13,15 @@ public class DrawLiquidOutputs extends DrawBlock{
     public TextureRegion[][] liquidOutputRegions;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        for(int i = 0; i<liquidOutputRegions.length; i++){
+            for(int j = 0; j<liquidOutputRegions[i].length; j++){
+                liquidOutputRegions[i][i].scale = isRescaled ? randomScale : 1f;
+            }
+        }
+    }
+
+    @Override
     public void draw(Building build){
         GenericCrafter crafter = (GenericCrafter)build.block;
         if(crafter.outputLiquids == null) return;

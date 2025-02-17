@@ -12,6 +12,11 @@ public class DrawFade extends DrawBlock{
     public TextureRegion region;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        region.scale = isRescaled ? randomScale: 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Draw.alpha(Mathf.absin(build.totalProgress(), scale, alpha) * build.warmup());
         Draw.rect(region, build.x, build.y);

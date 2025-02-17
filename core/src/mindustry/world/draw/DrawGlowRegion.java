@@ -35,6 +35,11 @@ public class DrawGlowRegion extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        region.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         if(build.warmup() <= 0.001f) return;
 

@@ -20,6 +20,11 @@ public class DrawSoftParticles extends DrawBlock{
     public Interp particleInterp = new PowIn(1.5f);
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        region.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
 
         if(build.warmup() > 0f && color.a > 0.001f){

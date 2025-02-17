@@ -20,6 +20,12 @@ public class DrawBlurSpin extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        region.scale = isRescaled ? randomScale: 1f;
+        blurRegion.scale = isRescaled ? randomScale: 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Drawf.spinSprite(build.warmup() > blurThresh ? blurRegion : region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed);
     }

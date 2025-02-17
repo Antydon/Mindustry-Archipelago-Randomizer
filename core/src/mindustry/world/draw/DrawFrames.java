@@ -16,6 +16,13 @@ public class DrawFrames extends DrawBlock{
     public TextureRegion[] regions;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        for (TextureRegion region : regions) {
+            region.scale = isRescaled ? randomScale : 1f;
+        }
+    }
+
+    @Override
     public void draw(Building build){
         Draw.rect(
             sine ?

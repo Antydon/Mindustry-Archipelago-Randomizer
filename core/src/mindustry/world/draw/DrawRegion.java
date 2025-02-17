@@ -37,6 +37,11 @@ public class DrawRegion extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        region.scale = isRescaled ? randomScale: 1f;
+    }
+
+    @Override
     public void draw(Building build){
         float z = Draw.z();
         if(layer > 0) Draw.z(layer);

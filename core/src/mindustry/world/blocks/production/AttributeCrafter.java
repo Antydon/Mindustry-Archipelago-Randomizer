@@ -1,10 +1,17 @@
 package mindustry.world.blocks.production;
 
 import arc.*;
+import mindustry.entities.part.DrawPart;
+import mindustry.entities.part.RegionPart;
 import mindustry.game.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.draw.DrawCultivator;
+import mindustry.world.draw.DrawLiquidRegion;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawRegion;
+import mindustry.world.draw.DrawTurret;
 import mindustry.world.meta.*;
 
 /** A crafter that gains efficiency from attribute tiles. */

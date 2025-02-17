@@ -15,6 +15,12 @@ public class DrawMultiWeave extends DrawBlock{
     public float pulse = 0.3f, pulseScl = 10f;
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        weave.scale = isRescaled ? randomScale : 1f;
+        glow.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void draw(Building build){
         Draw.color(weaveColor);
         if(fadeWeave){

@@ -23,6 +23,13 @@ public class DrawMulti extends DrawBlock{
     }
 
     @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        for (DrawBlock drawer : drawers) {
+            drawer.rescale(isRescaled, randomScale);
+        }
+    }
+
+    @Override
     public void getRegionsToOutline(Block block, Seq<TextureRegion> out){
         for(var draw : drawers){
             draw.getRegionsToOutline(block, out);

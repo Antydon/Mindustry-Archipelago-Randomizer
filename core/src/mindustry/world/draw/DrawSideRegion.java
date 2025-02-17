@@ -10,6 +10,11 @@ import mindustry.world.*;
 public class DrawSideRegion extends DrawBlock{
     public TextureRegion top1, top2;
 
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale) {
+        top1.scale = isRescaled ? randomScale : 1f;
+        top2.scale = isRescaled ? randomScale : 1f;
+    }
 
     @Override
     public void draw(Building build){

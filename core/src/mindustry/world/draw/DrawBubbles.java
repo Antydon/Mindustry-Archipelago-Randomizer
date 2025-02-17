@@ -13,11 +13,21 @@ public class DrawBubbles extends DrawBlock{
     public float recurrence = 6f, radius = 3f;
     public boolean fill = false;
 
+    public float originalSpread = 0f;
+
     public DrawBubbles(Color color){
         this.color = color;
     }
 
     public DrawBubbles(){
+    }
+
+    @Override
+    public void rescale(Boolean isRescaled, float randomScale){
+        if (originalSpread == 0f){
+            originalSpread = spread;
+        }
+        spread = isRescaled ? randomScale * originalSpread : originalSpread;
     }
 
     @Override
