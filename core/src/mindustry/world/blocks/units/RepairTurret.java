@@ -66,11 +66,11 @@ public class RepairTurret extends Block{
 
     public void rescale() {
         super.rescale();
-        baseRegion.scale = randomScale;
-        laser.scale = randomScale;
-        laserEnd.scale = randomScale;
-        laserTop.scale = randomScale;
-        laserTopEnd.scale = randomScale;
+        baseRegion.scale = isRescaled ? randomScale : 1f;
+        laser.scale = isRescaled ? randomScale : 1f;
+        laserEnd.scale = isRescaled ? randomScale : 1f;
+        laserTop.scale = isRescaled ? randomScale : 1f;
+        laserTopEnd.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

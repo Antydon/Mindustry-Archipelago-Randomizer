@@ -88,10 +88,10 @@ public class Drill extends Block{
 
     public void rescale() {
         super.rescale();
-        rimRegion.scale = randomScale;
-        rotatorRegion.scale = randomScale;
-        topRegion.scale = randomScale;
-        itemRegion.scale = randomScale;
+        rimRegion.scale = isRescaled ? randomScale : 1f;
+        rotatorRegion.scale = isRescaled ? randomScale : 1f;
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        itemRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

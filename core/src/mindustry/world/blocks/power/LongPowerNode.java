@@ -20,7 +20,7 @@ public class LongPowerNode extends PowerNode{
 
     public void rescale() {
         super.rescale();
-        glow.scale = randomScale;
+        glow.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

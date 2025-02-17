@@ -27,8 +27,8 @@ public class ItemIncinerator extends Block{
 
     public void rescale() {
         super.rescale();
-        liquidRegion.scale = randomScale;
-        topRegion.scale = randomScale;
+        liquidRegion.scale = isRescaled ? randomScale : 1f;
+        topRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

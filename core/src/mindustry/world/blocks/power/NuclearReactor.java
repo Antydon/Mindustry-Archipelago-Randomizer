@@ -65,8 +65,8 @@ public class NuclearReactor extends PowerGenerator{
 
     public void rescale() {
         super.rescale();
-        topRegion.scale = randomScale;
-        lightsRegion.scale = randomScale;
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        lightsRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

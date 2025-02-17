@@ -713,7 +713,7 @@ public class Block extends UnlockableContent implements Senseable {
     /**
      * The ratio of the new scale to calculate.
      */
-    public float randomScale = 0;
+    public float randomScale = 0f;
 
     public Block(String name) {
         super(name);
@@ -722,16 +722,18 @@ public class Block extends UnlockableContent implements Senseable {
     }
 
     public void rescale() {
-        if (randomizeSize == originalSize) { return; }
-        if(randomScale == 0) {
+        if(randomScale == 0f) {
             randomScale = (float) randomizeSize / originalSize;
         }
+        if (randomizeSize == originalSize) { return; }
         region.scale =  isRescaled ? randomScale : 1f;
         teamRegion.scale = isRescaled ? randomScale : 1f;
+        teamRegions[player.team().id].scale = isRescaled ? randomScale : 1f;
         // Should not be called on base block
         if (customShadow) {
             customShadowRegion.scale =  isRescaled ? randomScale : 1f;
         }
+        variants = 0;
     }
 
     public void drawBase(Tile tile) {
@@ -742,6 +744,7 @@ public class Block extends UnlockableContent implements Senseable {
             Draw.rect(variants == 0 ? region : variantRegions[Mathf.randomSeed(tile.pos(), 0,
                     Math.max(0, variantRegions.length - 1))], tile.drawx(), tile.drawy());
         }
+
     }
 
     public void drawShadow(Tile tile) {

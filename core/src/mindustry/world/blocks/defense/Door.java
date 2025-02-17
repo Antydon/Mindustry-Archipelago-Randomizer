@@ -52,7 +52,7 @@ public class Door extends Wall{
 
     public void rescale() {
         super.rescale();
-        openRegion.scale = randomScale;
+        openRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

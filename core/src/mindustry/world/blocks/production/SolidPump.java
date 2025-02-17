@@ -37,7 +37,7 @@ public class SolidPump extends Pump{
 
     public void rescale() {
         super.rescale();
-        rotatorRegion.scale = randomScale;
+        rotatorRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

@@ -103,8 +103,8 @@ public class PowerNode extends PowerBlock{
 
     public void rescale() {
         super.rescale();
-        laser.scale = randomScale;
-        laserEnd.scale = randomScale;
+        laser.scale = isRescaled ? randomScale : 1f;
+        laserEnd.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

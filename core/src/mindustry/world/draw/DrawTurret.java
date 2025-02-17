@@ -40,7 +40,7 @@ public class DrawTurret extends DrawBlock {
     }
     
     @Override
-    public void rescale(Boolean isRescaled, float randomScale){
+    public void rescale(Boolean isRescaled, float randomScale) {
         base.scale = isRescaled ? randomScale : 1f;
         liquid.scale = isRescaled ? randomScale : 1f;
         top.scale = isRescaled ? randomScale : 1f;

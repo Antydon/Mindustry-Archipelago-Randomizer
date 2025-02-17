@@ -74,14 +74,14 @@ public class BeamDrill extends Block{
 
     public void rescale() {
         super.rescale();
-        laser.scale = randomScale;
-        laserEnd.scale = randomScale;
-        laserCenter.scale = randomScale;
-        laserBoost.scale = randomScale;
-        laserEndBoost.scale = randomScale;
-        laserCenterBoost.scale = randomScale;
-        topRegion.scale = randomScale;
-        glowRegion.scale = randomScale;
+        laser.scale = isRescaled ? randomScale : 1f;
+        laserEnd.scale = isRescaled ? randomScale : 1f;
+        laserCenter.scale = isRescaled ? randomScale : 1f;
+        laserBoost.scale = isRescaled ? randomScale : 1f;
+        laserEndBoost.scale = isRescaled ? randomScale : 1f;
+        laserCenterBoost.scale = isRescaled ? randomScale : 1f;
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        glowRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

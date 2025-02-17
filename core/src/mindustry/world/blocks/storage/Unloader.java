@@ -43,7 +43,7 @@ public class Unloader extends Block{
 
     public void rescale() {
         super.rescale();
-        centerRegion.scale = randomScale;
+        centerRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

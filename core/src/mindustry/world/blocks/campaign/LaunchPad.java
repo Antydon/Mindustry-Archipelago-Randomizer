@@ -48,8 +48,8 @@ public class LaunchPad extends Block {
 
     public void rescale() {
         super.rescale();
-        lightRegion.scale = randomScale;
-        podRegion.scale = randomScale;
+        lightRegion.scale = isRescaled ? randomScale : 1f;
+        podRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

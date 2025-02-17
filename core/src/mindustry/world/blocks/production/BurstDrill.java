@@ -45,10 +45,10 @@ public class BurstDrill extends Drill{
 
     public void rescale() {
         super.rescale();
-        topInvertRegion.scale = randomScale;
-        glowRegion.scale = randomScale;
-        arrowRegion.scale = randomScale;
-        arrowBlurRegion.scale = randomScale;
+        topInvertRegion.scale = isRescaled ? randomScale : 1f;
+        glowRegion.scale = isRescaled ? randomScale : 1f;
+        arrowRegion.scale = isRescaled ? randomScale : 1f;
+        arrowBlurRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

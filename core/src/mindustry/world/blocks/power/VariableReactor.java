@@ -51,7 +51,7 @@ public class VariableReactor extends PowerGenerator{
 
     public void rescale() {
         super.rescale();
-        lightsRegion.scale = randomScale;
+        lightsRegion.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

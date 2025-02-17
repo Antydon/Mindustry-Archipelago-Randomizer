@@ -28,7 +28,7 @@ public class PowerDiode extends Block{
 
     public void rescale() {
         super.rescale();
-        arrow.scale = randomScale;
+        arrow.scale = isRescaled ? randomScale : 1f;
     }
 
 

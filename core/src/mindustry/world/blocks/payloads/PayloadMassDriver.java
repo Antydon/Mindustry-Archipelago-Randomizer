@@ -70,17 +70,17 @@ public class PayloadMassDriver extends PayloadBlock{
 
     public void rescale() {
         super.rescale();
-        topRegion.scale = randomScale;
-        outRegion.scale = randomScale;
-        inRegion.scale = randomScale;
-        baseRegion.scale = randomScale;
-        capRegion.scale = randomScale;
-        leftRegion.scale = randomScale;
-        rightRegion.scale = randomScale;
-        capOutlineRegion.scale = randomScale;
-        leftOutlineRegion.scale = randomScale;
-        rightOutlineRegion.scale = randomScale;
-        arrow.scale = randomScale;
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        outRegion.scale = isRescaled ? randomScale : 1f;
+        inRegion.scale = isRescaled ? randomScale : 1f;
+        baseRegion.scale = isRescaled ? randomScale : 1f;
+        capRegion.scale = isRescaled ? randomScale : 1f;
+        leftRegion.scale = isRescaled ? randomScale : 1f;
+        rightRegion.scale = isRescaled ? randomScale : 1f;
+        capOutlineRegion.scale = isRescaled ? randomScale : 1f;
+        leftOutlineRegion.scale = isRescaled ? randomScale : 1f;
+        rightOutlineRegion.scale = isRescaled ? randomScale : 1f;
+        arrow.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override

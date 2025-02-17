@@ -30,11 +30,11 @@ public class UnitAssemblerModule extends PayloadBlock{
 
     public void rescale() {
         super.rescale();
-        topRegion.scale = randomScale;
-        outRegion.scale =randomScale;
-        inRegion.scale = randomScale;
-        sideRegion1.scale = randomScale;
-        sideRegion2.scale = randomScale;
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        outRegion.scale =isRescaled ? randomScale : 1f;
+        inRegion.scale = isRescaled ? randomScale : 1f;
+        sideRegion1.scale = isRescaled ? randomScale : 1f;
+        sideRegion2.scale = isRescaled ? randomScale : 1f;
     }
 
     @Override
