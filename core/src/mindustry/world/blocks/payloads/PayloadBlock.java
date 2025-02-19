@@ -29,12 +29,24 @@ public class PayloadBlock extends Block{
     }
 
     @Override
+    public void rescale() {
+        super.rescale();
+        topRegion.scale = isRescaled ? randomScale : 1f;
+        outRegion.scale = isRescaled ? randomScale : 1f;
+        inRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void load(){
         super.load();
 
         topRegion = Core.atlas.find(name + "-top", "factory-top-" + size + regionSuffix);
         outRegion = Core.atlas.find(name + "-out", "factory-out-" + size + regionSuffix);
         inRegion = Core.atlas.find(name + "-in", "factory-in-" + size + regionSuffix);
+
+        topRegion = new TextureRegion(topRegion);
+        outRegion = new TextureRegion(outRegion);
+        inRegion = new TextureRegion(inRegion);
     }
 
     public static boolean blends(Building build, int direction){

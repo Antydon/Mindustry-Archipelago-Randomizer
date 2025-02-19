@@ -733,7 +733,8 @@ public class Block extends UnlockableContent implements Senseable {
         if (customShadow) {
             customShadowRegion.scale =  isRescaled ? randomScale : 1f;
         }
-        variants = 0;
+        offset = ((size + 1) % 2) * tilesize / 2f;
+        sizeOffset = -((size - 1) / 2);
     }
 
     public void drawBase(Tile tile) {
@@ -1080,8 +1081,6 @@ public class Block extends UnlockableContent implements Senseable {
 
     public void drawPlan(BuildPlan plan, Eachable<BuildPlan> list, boolean valid, float alpha) {
         this.size = this.randomizeSize;
-        offset = ((size + 1) % 2) * tilesize / 2f;
-        sizeOffset = -((size - 1) / 2);
         Draw.reset();
         Draw.mixcol(!valid ? Pal.breakInvalid : Color.white,
                 (!valid ? 0.4f : 0.24f) + Mathf.absin(Time.globalTime, 6f, 0.28f));

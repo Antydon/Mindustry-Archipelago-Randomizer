@@ -41,11 +41,6 @@ public class DrawTurret extends DrawBlock {
     
     @Override
     public void rescale(Boolean isRescaled, float randomScale) {
-        base.scale = isRescaled ? randomScale : 1f;
-        liquid.scale = isRescaled ? randomScale : 1f;
-        top.scale = isRescaled ? randomScale : 1f;
-        preview.scale = isRescaled ? randomScale : 1f;
-        outline.scale = isRescaled ? randomScale : 1f;
         for (int i = 0; i < parts.size; i ++) {
             parts.get(i).rescale(isRescaled, randomScale);
         }
@@ -69,12 +64,16 @@ public class DrawTurret extends DrawBlock {
         Turret turret = (Turret) build.block;
         TurretBuild tb = (TurretBuild) build;
 
-        Draw.rect(base, build.x, build.y);
+        if(turret.isRescaled){
+            rescale(turret.isRescaled, turret.randomScale);
+        }
+
+        Draw.rect(turret.base, build.x, build.y);
         Draw.color();
 
         Draw.z(Layer.turret - 0.5f);
 
-        Drawf.shadow(preview, build.x + tb.recoilOffset.x - turret.elevation,
+        Drawf.shadow(turret.preview, build.x + tb.recoilOffset.x - turret.elevation,
                 build.y + tb.recoilOffset.y - turret.elevation, tb.drawrot());
 
         Draw.z(Layer.turret);
@@ -86,7 +85,7 @@ public class DrawTurret extends DrawBlock {
             if (outline.found()) {
                 //draw outline under everything when parts are involved
                 Draw.z(Layer.turret - 0.01f);
-                Draw.rect(outline, build.x + tb.recoilOffset.x, build.y + tb.recoilOffset.y,
+                Draw.rect(turret.outline, build.x + tb.recoilOffset.x, build.y + tb.recoilOffset.y,
                         tb.drawrot());
                 Draw.z(Layer.turret);
             }
@@ -113,15 +112,16 @@ public class DrawTurret extends DrawBlock {
                     build.y + build.recoilOffset.y, build.drawrot());
         }
 
-        if (liquid.found()) {
+        if (block.liquid.found()) {
             Liquid toDraw = liquidDraw == null ? build.liquids.current() : liquidDraw;
-            Drawf.liquid(liquid, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y,
+            Drawf.liquid(block.liquid, build.x + build.recoilOffset.x,
+                    build.y + build.recoilOffset.y,
                     build.liquids.get(toDraw) / block.liquidCapacity,
                     toDraw.color.write(Tmp.c1).a(1f), build.drawrot());
         }
 
-        if (top.found()) {
-            Draw.rect(top, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y,
+        if (block.top.found()) {
+            Draw.rect(block.top, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y,
                     build.drawrot());
         }
     }
@@ -131,7 +131,7 @@ public class DrawTurret extends DrawBlock {
             return;
         }
 
-        Drawf.additive(heat, block.heatColor.write(Tmp.c1).a(build.heat),
+        Drawf.additive(block.heat, block.heatColor.write(Tmp.c1).a(build.heat),
                 build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.drawrot(),
                 Layer.turretHeat);
     }

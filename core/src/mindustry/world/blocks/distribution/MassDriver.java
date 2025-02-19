@@ -56,6 +56,12 @@ public class MassDriver extends Block{
     }
 
     @Override
+    public void rescale() {
+        super.rescale();
+        baseRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
     public void setStats(){
         super.setStats();
 

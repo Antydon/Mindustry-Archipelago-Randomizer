@@ -70,6 +70,16 @@ public class TractorBeamTurret extends BaseTurret{
     }
 
     @Override
+    public void load() {
+        super.load();
+
+        baseRegion = new TextureRegion(baseRegion);
+        laser = new TextureRegion(laser);
+        laserStart = new TextureRegion(laserStart);
+        laserEnd = new TextureRegion(laserEnd);
+    }
+
+    @Override
     public void init(){
         super.init();
 

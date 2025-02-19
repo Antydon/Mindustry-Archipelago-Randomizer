@@ -53,6 +53,12 @@ public class PointDefenseTurret extends ReloadTurret{
     }
 
     @Override
+    public void load() {
+        super.load();
+        baseRegion = new TextureRegion(baseRegion);
+    }
+
+    @Override
     public void setStats(){
         super.setStats();
 
