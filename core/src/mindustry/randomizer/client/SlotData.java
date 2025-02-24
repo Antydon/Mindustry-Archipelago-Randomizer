@@ -37,6 +37,9 @@ public class SlotData {
     @SerializedName("randomize_core_units_weapon")
     private boolean randomizeCoreUnitsWeapon = false;
 
+    @SerializedName("randomize_block_size")
+    private boolean randomizeBlockSize = false;
+
     @SerializedName("logistic_distribution")
     private int logisticDistribution = 0;
 
@@ -87,6 +90,10 @@ public class SlotData {
 
     public boolean getRandomizeCoreUnitsWeapon() {
         return randomizeCoreUnitsWeapon;
+    }
+
+    public boolean getRandomizeBlockSize() {
+        return randomizeBlockSize;
     }
 
     public int getLogisticDistribution(){

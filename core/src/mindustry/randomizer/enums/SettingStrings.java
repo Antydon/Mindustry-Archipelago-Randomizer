@@ -27,6 +27,7 @@ public enum SettingStrings {
     AP_DEATH_LINK_PROTECT_CAPTURED_SECTOR("APdeathLinkProtectCapturedSector"),
     AMOUNT_OF_RESOURCES_REQUIRED("APamountOfResourcesRequired"),
     RANDOMIZE_CORE_UNITS_WEAPON("APrandomizeCoreUnitsWeapon"),
+    RANDOMIZE_BLOCKS_SIZE("APrandomizeBlocksSize"),
     LOGISTIC_DISTRIBUTION("APlogisticDistribution"),
     EREKIR_RANDOMIZED_WEAPON_EVOKE("APrandomizedEvokeWeapon"),
     EREKIR_RANDOMIZED_WEAPON_INCITE("APrandomizedInciteWeapon"),

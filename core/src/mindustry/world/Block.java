@@ -721,8 +721,12 @@ public class Block extends UnlockableContent implements Senseable {
         selectionSize = 28f;
     }
 
+    /**
+     * Change the scale of the TextureRegion to fit the new ration of the Block.
+     */
     public void rescale() {
         if(randomScale == 0f) {
+            randomScale = (float) randomizeSize / originalSize;
             randomScale = (float) randomizeSize / originalSize;
         }
         if (randomizeSize == originalSize) { return; }
@@ -735,6 +739,16 @@ public class Block extends UnlockableContent implements Senseable {
         }
         offset = ((size + 1) % 2) * tilesize / 2f;
         sizeOffset = -((size - 1) / 2);
+    }
+
+
+    /**
+     * Reload the TextureRegion as a new TextureRegion to separate region from Build$ and create
+     * a new individual one for the block.
+     */
+    public void reloadTextures(){
+        region = new TextureRegion(region);
+        teamRegion = new TextureRegion(teamRegion);
     }
 
     public void drawBase(Tile tile) {

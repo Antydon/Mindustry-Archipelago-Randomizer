@@ -302,6 +302,7 @@ public class MindustryOptions {
             this.campaign = slotData.getCampaignChoice();
             this.goal = slotData.getGoal();
             this.randomizeCoreUnitsWeapon = slotData.getRandomizeCoreUnitsWeapon();
+            this.randomizeBlocksSize = slotData.getRandomizeBlockSize();
             this.logisticDistribution = slotData.getLogisticDistribution();
             this.makeEarlyRoadblocksLocal = slotData.getMakeEarlyRoadblocksLocal();
             this.amountOfResourcesRequired = slotData.getAmountOfResourcesRequired();
@@ -333,6 +334,7 @@ public class MindustryOptions {
             this.deathLinkMode = 0;
             this.coreRussianRouletteChambers = 6;
             this.randomizeCoreUnitsWeapon = false;
+            this.randomizeBlocksSize = false;
             this.logisticDistribution = 0;
             this.makeEarlyRoadblocksLocal = false;
             this.amountOfResourcesRequired = 2000;
@@ -650,6 +652,7 @@ public class MindustryOptions {
         settings.put(CAMPAIGN_CHOICE.value, getCampaignValue());
         settings.put(AP_GOAL.value, getGoalValue());
         settings.put(RANDOMIZE_CORE_UNITS_WEAPON.value, getRandomizeCoreUnitsWeapon());
+        settings.put(RANDOMIZE_BLOCKS_SIZE.value, getRandomizeBlocksSize());
         settings.put(LOGISTIC_DISTRIBUTION.value, getLogisticDistributionValue());
         settings.put(PROGRESSIVE_DRILLS.value, getProgressiveDrills());
         settings.put(PROGRESSIVE_GENERATORS.value, getProgressiveGenerators());
@@ -685,12 +688,12 @@ public class MindustryOptions {
         this.campaign = settings.getInt(CAMPAIGN_CHOICE.value);
         this.goal = settings.getInt(AP_GOAL.value);
         this.randomizeCoreUnitsWeapon = settings.getBool(RANDOMIZE_CORE_UNITS_WEAPON.value);
+        this.randomizeBlocksSize = false; //settings.getBool(RANDOMIZE_BLOCKS_SIZE.value);
         this.logisticDistribution = settings.getInt(LOGISTIC_DISTRIBUTION.value);
         this.progressiveDrills = settings.getBool(PROGRESSIVE_DRILLS.value);
         this.progressiveGenerators = settings.getBool(PROGRESSIVE_GENERATORS.value);
         this.makeEarlyRoadblocksLocal = settings.getBool(AP_MAKE_EARLY_ROADBLOCKS_LOCAL.value);
         this.amountOfResourcesRequired = settings.getInt(AMOUNT_OF_RESOURCES_REQUIRED.value);
-        this.randomizeBlocksSize = false; // TEMP settings.getBool(RANDOMIZE_BLOCKS_SIZE.value);
 
         this.optionsFilled = true;
         applyRandomizerBlocks(getCampaign());
@@ -743,6 +746,7 @@ public class MindustryOptions {
 
     /**
      * Apply the randomizer to all non-terrain blocks in Serpulo.
+     * @param random Same Random use for both the planet.
      */
     private static void randomizeAllBlocksSerpulo(Random random) {
         for (Block block : RandomizedBlocks.getBlocksSerpulo()) {
@@ -752,15 +756,17 @@ public class MindustryOptions {
 
     /**
      * Apply the randomizer to all non-terrain blocks in Erekir.
+     * @param random Same Random use for both the planet.
      */
     protected static void randomizeAllBlocksErekir(Random random) {
-//        for (Block block : RandomizedBlocks.getBlocksErekir()) {
-//            randomizeBlockSize(block);
-//        }
+        for (Block block : RandomizedBlocks.getBlocksErekir()) {
+            randomizeBlockSize(block, random);
+        }
     }
 
     /**
      *  Method to change the size of the block between minBlockSize and maxBlockSize
+     * @param block The block to randomize the size.
      */
     private static void randomizeBlockSize(Block block, Random random) {
         block.originalSize = block.size;
@@ -769,5 +775,6 @@ public class MindustryOptions {
         } else {
             block.randomizeSize = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
         }
+        block.reloadTextures();
     }
 }

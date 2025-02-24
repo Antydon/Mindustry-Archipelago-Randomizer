@@ -15,6 +15,7 @@ import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;
 import mindustry.gen.*;
+import mindustry.randomizer.MindustryOptions;
 import mindustry.world.*;
 import mindustry.world.blocks.environment.Floor.*;
 import mindustry.world.blocks.power.*;
@@ -442,7 +443,7 @@ public class BlockRenderer {
             Block block = tile.block();
             Building build = tile.build;
 
-            if (build != null) {
+            if (build != null && randomizer.worldState.options.getRandomizeBlocksSize()) {
                 if (build.team().id == pteam.id) {
                     if (!block.isRescaled) {
                         build.block.size = build.block.randomizeSize;

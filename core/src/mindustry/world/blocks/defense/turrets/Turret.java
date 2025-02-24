@@ -237,6 +237,7 @@ public class Turret extends ReloadTurret {
         outlinedIcon = 1;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         base.scale = isRescaled ? randomScale : 1f;
@@ -246,6 +247,16 @@ public class Turret extends ReloadTurret {
         preview.scale = isRescaled ? randomScale : 1f;
         outline.scale = isRescaled ? randomScale : 1f;
         drawer.rescale(isRescaled, randomScale);
+    }
+
+    @Override
+    public void reloadTextures(){
+        base = new TextureRegion(((DrawTurret)drawer).base);
+        liquid = new TextureRegion(((DrawTurret)drawer).liquid);
+        top = new TextureRegion(((DrawTurret)drawer).top);
+        heat = new TextureRegion(((DrawTurret)drawer).heat);
+        preview = new TextureRegion(((DrawTurret)drawer).preview);
+        outline = new TextureRegion(((DrawTurret)drawer).outline);
     }
 
     @Override
@@ -304,12 +315,6 @@ public class Turret extends ReloadTurret {
         super.load();
 
         drawer.load(this);
-        base = new TextureRegion(((DrawTurret)drawer).base);
-        liquid = new TextureRegion(((DrawTurret)drawer).liquid);
-        top = new TextureRegion(((DrawTurret)drawer).top);
-        heat = new TextureRegion(((DrawTurret)drawer).heat);
-        preview = new TextureRegion(((DrawTurret)drawer).preview);
-        outline = new TextureRegion(((DrawTurret)drawer).outline);
     }
 
     @Override
