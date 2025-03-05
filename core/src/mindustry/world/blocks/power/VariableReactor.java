@@ -49,9 +49,16 @@ public class VariableReactor extends PowerGenerator{
         explosionPuddleAmount = 100f;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         lightsRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        lightsRegion = new TextureRegion(lightsRegion);
     }
 
     @Override

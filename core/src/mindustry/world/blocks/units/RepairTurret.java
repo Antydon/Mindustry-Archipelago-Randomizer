@@ -64,6 +64,7 @@ public class RepairTurret extends Block{
         envEnabled |= Env.space;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         baseRegion.scale = isRescaled ? randomScale : 1f;
@@ -71,6 +72,16 @@ public class RepairTurret extends Block{
         laserEnd.scale = isRescaled ? randomScale : 1f;
         laserTop.scale = isRescaled ? randomScale : 1f;
         laserTopEnd.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        baseRegion = new TextureRegion(baseRegion);
+        laser = new TextureRegion(laser);
+        laserEnd = new TextureRegion(laserEnd);
+        laserTop = new TextureRegion(laserTop);
+        laserTopEnd = new TextureRegion(laserTopEnd);
     }
 
     @Override

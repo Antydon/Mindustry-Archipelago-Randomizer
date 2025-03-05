@@ -25,6 +25,12 @@ public abstract class DrawBlock{
     /** Change TextureRegion scale to for the block randomizer. */
     public void rescale(Boolean isRescaled, float randomScale){}
 
+    /** Return the new list of TextureRegion to the caller */
+    public TextureRegion[] reloadTextures(){
+        return new TextureRegion[0];
+    }
+
+
     /** Draws the block itself. */
     public void draw(Building build){
 

@@ -35,9 +35,16 @@ public class SolidPump extends Pump{
         envEnabled = Env.terrestrial;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         rotatorRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures() {
+        super.reloadTextures();
+        rotatorRegion = new TextureRegion(rotatorRegion);
     }
 
     @Override

@@ -7,6 +7,10 @@ import mindustry.entities.units.*;
 import mindustry.gen.*;
 import mindustry.world.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /** combined several DrawBlocks into one */
 public class DrawMulti extends DrawBlock{
     public DrawBlock[] drawers = {};
@@ -27,6 +31,15 @@ public class DrawMulti extends DrawBlock{
         for (DrawBlock drawer : drawers) {
             drawer.rescale(isRescaled, randomScale);
         }
+    }
+
+    @Override
+    public TextureRegion[] reloadTextures() {
+        List<TextureRegion> regions = new ArrayList<>();
+        for (DrawBlock drawer : drawers) {
+            regions.addAll(Arrays.stream(drawer.reloadTextures()).toList());
+        }
+        return regions.toArray(new TextureRegion[0]);
     }
 
     @Override

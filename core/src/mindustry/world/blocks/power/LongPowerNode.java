@@ -18,9 +18,16 @@ public class LongPowerNode extends PowerNode{
         drawRange = false;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         glow.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        glow = new TextureRegion(glow);
     }
 
     @Override

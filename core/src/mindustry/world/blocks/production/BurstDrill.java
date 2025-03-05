@@ -43,12 +43,22 @@ public class BurstDrill extends Drill{
         ambientSound = Sounds.drillCharge;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         topInvertRegion.scale = isRescaled ? randomScale : 1f;
         glowRegion.scale = isRescaled ? randomScale : 1f;
         arrowRegion.scale = isRescaled ? randomScale : 1f;
         arrowBlurRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        topInvertRegion = new TextureRegion(topInvertRegion);
+        glowRegion = new TextureRegion(glowRegion);
+        arrowRegion = new TextureRegion(arrowRegion);
+        arrowBlurRegion = new TextureRegion(arrowBlurRegion);
     }
 
     @Override

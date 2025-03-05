@@ -53,6 +53,13 @@ public class LaunchPad extends Block {
     }
 
     @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        lightRegion = new TextureRegion(lightRegion);
+        podRegion = new TextureRegion(podRegion);
+    }
+
+    @Override
     public void setStats() {
         super.setStats();
 

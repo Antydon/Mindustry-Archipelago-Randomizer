@@ -25,10 +25,18 @@ public class ItemIncinerator extends Block{
         solid = true;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         liquidRegion.scale = isRescaled ? randomScale : 1f;
         topRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        liquidRegion = new TextureRegion(liquidRegion);
+        topRegion = new TextureRegion(topRegion);
     }
 
     @Override

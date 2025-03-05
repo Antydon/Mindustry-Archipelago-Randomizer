@@ -14,6 +14,7 @@ import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.defense.turrets.Turret.*;
 
 import static mindustry.Vars.player;
+import static mindustry.Vars.randomizer;
 
 /**
  * Extend to implement custom drawing behavior for a turret.
@@ -64,29 +65,46 @@ public class DrawTurret extends DrawBlock {
         Turret turret = (Turret) build.block;
         TurretBuild tb = (TurretBuild) build;
 
-        if(turret.isRescaled){
+        if(randomizer.worldState.options.getRandomizeBlocksSize()){
             rescale(turret.isRescaled, turret.randomScale);
+
+            Draw.rect(turret.base, build.x, build.y);
+            Draw.color();
+
+            Draw.z(Layer.turret - 0.5f);
+
+            Drawf.shadow(turret.preview, build.x + tb.recoilOffset.x - turret.elevation,
+                    build.y + tb.recoilOffset.y - turret.elevation, tb.drawrot());
+
+            Draw.z(Layer.turret);
+
+            drawTurretRandomizer(turret, tb);
+            drawHeatRandomizer(turret, tb);
+        } else {
+            Draw.rect(base, build.x, build.y);
+            Draw.color();
+
+            Draw.z(Layer.turret - 0.5f);
+
+            Drawf.shadow(preview, build.x + tb.recoilOffset.x - turret.elevation,
+                    build.y + tb.recoilOffset.y - turret.elevation, tb.drawrot());
+
+            Draw.z(Layer.turret);
+
+            drawTurret(turret, tb);
+            drawHeat(turret, tb);
         }
 
-        Draw.rect(turret.base, build.x, build.y);
-        Draw.color();
-
-        Draw.z(Layer.turret - 0.5f);
-
-        Drawf.shadow(turret.preview, build.x + tb.recoilOffset.x - turret.elevation,
-                build.y + tb.recoilOffset.y - turret.elevation, tb.drawrot());
-
-        Draw.z(Layer.turret);
-
-        drawTurret(turret, tb);
-        drawHeat(turret, tb);
 
         if (parts.size > 0) {
             if (outline.found()) {
                 //draw outline under everything when parts are involved
                 Draw.z(Layer.turret - 0.01f);
-                Draw.rect(turret.outline, build.x + tb.recoilOffset.x, build.y + tb.recoilOffset.y,
-                        tb.drawrot());
+                if(randomizer.worldState.options.getRandomizeBlocksSize()) {
+                    Draw.rect(turret.outline, build.x + tb.recoilOffset.x, build.y + tb.recoilOffset.y, tb.drawrot());
+                } else {
+                    Draw.rect(outline, build.x + tb.recoilOffset.x, build.y + tb.recoilOffset.y, tb.drawrot());
+                }
                 Draw.z(Layer.turret);
             }
 
@@ -106,27 +124,50 @@ public class DrawTurret extends DrawBlock {
     }
 
     public void drawTurret(Turret block, TurretBuild build) {
-
         if (block.region.found()) {
-            Draw.rect(block.region, build.x + build.recoilOffset.x,
-                    build.y + build.recoilOffset.y, build.drawrot());
+            Draw.rect(block.region, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y
+                    , build.drawrot());
+        }
+
+        if (liquid.found()) {
+            Liquid toDraw = liquidDraw == null ? build.liquids.current() : liquidDraw;
+            Drawf.liquid(liquid, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.liquids.get(toDraw) / block.liquidCapacity, toDraw.color.write(Tmp.c1).a(1f), build.drawrot());
+        }
+
+        if (top.found()) {
+            Draw.rect(top, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.drawrot());
+        }
+    }
+
+    /** BlockRandomizer version of the method drawTurret */
+    public void drawTurretRandomizer(Turret block, TurretBuild build) {
+        if (block.region.found()) {
+            Draw.rect(block.outline, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y
+                    , build.drawrot());
         }
 
         if (block.liquid.found()) {
             Liquid toDraw = liquidDraw == null ? build.liquids.current() : liquidDraw;
-            Drawf.liquid(block.liquid, build.x + build.recoilOffset.x,
-                    build.y + build.recoilOffset.y,
-                    build.liquids.get(toDraw) / block.liquidCapacity,
-                    toDraw.color.write(Tmp.c1).a(1f), build.drawrot());
+            Drawf.liquid(block.liquid, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.liquids.get(toDraw) / block.liquidCapacity, toDraw.color.write(Tmp.c1).a(1f), build.drawrot());
         }
 
         if (block.top.found()) {
-            Draw.rect(block.top, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y,
-                    build.drawrot());
+            Draw.rect(block.top, build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.drawrot());
         }
     }
 
     public void drawHeat(Turret block, TurretBuild build) {
+        if (build.heat <= 0.00001f || !heat.found()) {
+            return;
+        }
+
+        Drawf.additive(heat, block.heatColor.write(Tmp.c1).a(build.heat),
+                build.x + build.recoilOffset.x, build.y + build.recoilOffset.y, build.drawrot(),
+                Layer.turretHeat);
+    }
+
+    /** BlockRandomizer version of the method drawHeat */
+    public void drawHeatRandomizer(Turret block, TurretBuild build) {
         if (build.heat <= 0.00001f || !heat.found()) {
             return;
         }

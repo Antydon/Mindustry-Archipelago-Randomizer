@@ -47,12 +47,22 @@ public class TractorBeamTurret extends BaseTurret{
         envEnabled |= Env.space;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         baseRegion.scale = isRescaled ? randomScale : 1f;
         laser.scale = isRescaled ? randomScale : 1f;
         laserStart.scale = isRescaled ? randomScale : 1f;
         laserEnd.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        baseRegion = new TextureRegion(baseRegion);
+        laser = new TextureRegion(laser);
+        laserStart = new TextureRegion(laserStart);
+        laserEnd = new TextureRegion(laserEnd);
     }
 
     @Override

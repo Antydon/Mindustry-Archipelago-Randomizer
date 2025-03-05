@@ -45,6 +45,8 @@ public class GenericCrafter extends Block{
 
     public DrawBlock drawer = new DrawDefault();
 
+    public TextureRegion[] textureRegions;
+
     public GenericCrafter(String name){
         super(name);
         update = true;
@@ -59,6 +61,7 @@ public class GenericCrafter extends Block{
 
     public void rescale() {
         super.rescale();
+        drawer.rescale(isRescaled, randomScale);
         if (drawer instanceof DrawMulti drawMulti) {
             for (int i = 0; i < drawMulti.drawers.length; i++) {
                 if (drawMulti.drawers[i] instanceof DrawRegion drawR) {
@@ -82,6 +85,12 @@ public class GenericCrafter extends Block{
                 }
             }
         }
+    }
+
+    @Override
+    public void reloadTextures(){ //return a Dictionnary<string, TextureRegion>
+        super.reloadTextures();
+        textureRegions = drawer.reloadTextures();
     }
 
     @Override

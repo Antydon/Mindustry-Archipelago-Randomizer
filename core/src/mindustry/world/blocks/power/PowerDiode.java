@@ -26,9 +26,16 @@ public class PowerDiode extends Block{
         envEnabled |= Env.space;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         arrow.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        arrow = new TextureRegion(arrow);
     }
 
 

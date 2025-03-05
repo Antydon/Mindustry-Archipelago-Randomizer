@@ -57,6 +57,7 @@ public class UnitAssembler extends PayloadBlock{
         quickRotate = false;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         topRegion.scale = isRescaled ? randomScale : 1f;
@@ -64,6 +65,16 @@ public class UnitAssembler extends PayloadBlock{
         inRegion.scale = isRescaled ? randomScale : 1f;
         sideRegion1.scale = isRescaled ? randomScale : 1f;
         sideRegion2.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        topRegion = new TextureRegion(topRegion);
+        outRegion = new TextureRegion(outRegion);
+        inRegion = new TextureRegion(inRegion);
+        sideRegion1 = new TextureRegion(sideRegion1);
+        sideRegion2 = new TextureRegion(sideRegion2);
     }
 
     public Rect getRect(Rect rect, float x, float y, int rotation){

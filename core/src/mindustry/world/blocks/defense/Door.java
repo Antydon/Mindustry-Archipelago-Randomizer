@@ -50,9 +50,16 @@ public class Door extends Wall{
         });
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         openRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        openRegion = new TextureRegion(openRegion);
     }
 
     @Override

@@ -72,6 +72,7 @@ public class BeamDrill extends Block{
         flags = EnumSet.of(BlockFlag.drill);
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         laser.scale = isRescaled ? randomScale : 1f;
@@ -82,6 +83,19 @@ public class BeamDrill extends Block{
         laserCenterBoost.scale = isRescaled ? randomScale : 1f;
         topRegion.scale = isRescaled ? randomScale : 1f;
         glowRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        laser = new TextureRegion(laser);
+        laserEnd = new TextureRegion(laserEnd);
+        laserCenter = new TextureRegion(laserCenter);
+        laserBoost = new TextureRegion(laserBoost);
+        laserEndBoost = new TextureRegion(laserEndBoost);
+        laserCenterBoost = new TextureRegion(laserCenterBoost);
+        topRegion = new TextureRegion(topRegion);
+        glowRegion = new TextureRegion(glowRegion);
     }
 
     @Override

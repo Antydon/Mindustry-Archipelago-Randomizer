@@ -40,10 +40,18 @@ public class BeamNode extends PowerBlock{
         priority = TargetPriority.transport;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         laser.scale = isRescaled ? randomScale : 1f;
         laserEnd.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        laser = new TextureRegion(laser);
+        laserEnd = new TextureRegion(laserEnd);
     }
 
 

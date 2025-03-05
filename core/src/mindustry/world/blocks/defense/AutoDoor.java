@@ -41,9 +41,16 @@ public class AutoDoor extends Wall{
         drawDisabled = true;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         openRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        openRegion = new TextureRegion(openRegion);
     }
 
     @Remote(called = Loc.server)

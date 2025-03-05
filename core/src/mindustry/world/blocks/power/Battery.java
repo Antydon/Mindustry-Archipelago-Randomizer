@@ -33,9 +33,16 @@ public class Battery extends PowerDistributor{
         update = false;
     }
 
+    @Override
     public void rescale() {
         super.rescale();
         topRegion.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(){
+        super.reloadTextures();
+        topRegion = new TextureRegion(topRegion);
     }
 
     @Override

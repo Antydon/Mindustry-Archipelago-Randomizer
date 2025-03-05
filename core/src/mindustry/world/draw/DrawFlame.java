@@ -34,6 +34,11 @@ public class DrawFlame extends DrawBlock{
     }
 
     @Override
+    public TextureRegion[] reloadTextures() {
+        return new TextureRegion[]{new TextureRegion(top)};
+    }
+
+    @Override
     public void draw(Building build){
         if(build.warmup() > 0f && flameColor.a > 0.001f){
             float g = 0.3f;
