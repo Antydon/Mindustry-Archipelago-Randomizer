@@ -7,6 +7,8 @@ import mindustry.entities.units.*;
 import mindustry.gen.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawSideRegion extends DrawBlock{
     public TextureRegion top1, top2;
 
@@ -17,8 +19,20 @@ public class DrawSideRegion extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("sideTop", new TextureRegion(top1));
+        block.textureRegions.put("sideTop2", new TextureRegion(top2));
+    }
+
+    @Override
     public void draw(Building build){
-        Draw.rect(build.rotation > 1 ? top2 : top1, build.x, build.y, build.rotdeg());
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Draw.rect(build.rotation > 1 ? build.block.textureRegions.get("siteTop2") :
+                            build.block.textureRegions.get("siteTop1"),build.x, build.y,
+                    build.rotdeg());
+        } else {
+            Draw.rect(build.rotation > 1 ? top2 : top1, build.x, build.y, build.rotdeg());
+        }
     }
 
     @Override
@@ -30,6 +44,7 @@ public class DrawSideRegion extends DrawBlock{
     public void load(Block block){
         top1 = Core.atlas.find(block.name + "-top1");
         top2 = Core.atlas.find(block.name + "-top2");
+        super.load(block);
     }
 
     @Override

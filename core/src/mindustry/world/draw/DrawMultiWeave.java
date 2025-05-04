@@ -7,6 +7,8 @@ import arc.math.*;
 import mindustry.gen.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawMultiWeave extends DrawBlock{
     public TextureRegion weave, glow;
     public float rotateSpeed = 1f, rotateSpeed2 = -0.9f;
@@ -21,21 +23,48 @@ public class DrawMultiWeave extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("weave", new TextureRegion(weave));
+        block.textureRegions.put("weaveGlow", new TextureRegion(glow));
+    }
+
+    @Override
     public void draw(Building build){
+
         Draw.color(weaveColor);
-        if(fadeWeave){
+        if (fadeWeave) {
             Draw.alpha(build.warmup());
         }
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            drawRandom(build);
+        } else {
+            Draw.rect(weave, build.x, build.y, build.totalProgress() * rotateSpeed);
+            Draw.rect(weave, build.x, build.y, build.totalProgress() * rotateSpeed * rotateSpeed2);
 
-        Draw.rect(weave, build.x, build.y, build.totalProgress() * rotateSpeed);
-        Draw.rect(weave, build.x, build.y, build.totalProgress() * rotateSpeed * rotateSpeed2);
+            Draw.blend(Blending.additive);
+
+            Draw.color(glowColor, build.warmup() * (glowColor.a * (1f - pulse + Mathf.absin(pulseScl, pulse))));
+
+            Draw.rect(glow, build.x, build.y, build.totalProgress() * rotateSpeed);
+            Draw.rect(glow, build.x, build.y, build.totalProgress() * rotateSpeed * rotateSpeed2);
+
+            Draw.blend();
+            Draw.reset();
+        }
+    }
+
+    private void drawRandom(Building build){
+        var textures = build.block.textureRegions;
+        Draw.rect(textures.get("weave"), build.x, build.y, build.totalProgress() * rotateSpeed);
+        Draw.rect(textures.get("weave"), build.x, build.y, build.totalProgress() * rotateSpeed * rotateSpeed2);
 
         Draw.blend(Blending.additive);
 
         Draw.color(glowColor, build.warmup() * (glowColor.a * (1f - pulse + Mathf.absin(pulseScl, pulse))));
 
-        Draw.rect(glow, build.x, build.y, build.totalProgress() * rotateSpeed);
-        Draw.rect(glow, build.x, build.y, build.totalProgress() * rotateSpeed * rotateSpeed2);
+        Draw.rect(textures.get("weaveGlow"), build.x, build.y, build.totalProgress() * rotateSpeed);
+        Draw.rect(textures.get("weaveGlow"), build.x, build.y,
+                build.totalProgress() * rotateSpeed * rotateSpeed2);
 
         Draw.blend();
         Draw.reset();
@@ -50,6 +79,7 @@ public class DrawMultiWeave extends DrawBlock{
     public void load(Block block){
         weave = Core.atlas.find(block.name + "-weave");
         glow = Core.atlas.find(block.name + "-weave-glow");
+        super.load(block);
     }
 
 }

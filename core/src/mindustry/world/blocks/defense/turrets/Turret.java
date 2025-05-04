@@ -228,8 +228,6 @@ public class Turret extends ReloadTurret {
      */
     public DrawBlock drawer = new DrawTurret();
 
-    public TextureRegion base, liquid, top, heat, preview, outline;
-
     public Turret(String name) {
         super(name);
         liquidCapacity = 20f;
@@ -239,24 +237,16 @@ public class Turret extends ReloadTurret {
 
     @Override
     public void rescale() {
+        if(failedTexturesReload) {
+            failedTexturesReload = false;
+            drawer.reloadTextures(this);
+        }
         super.rescale();
-        base.scale = isRescaled ? randomScale : 1f;
-        liquid.scale = isRescaled ? randomScale : 1f;
-        top.scale = isRescaled ? randomScale : 1f;
-        heat.scale = isRescaled ? randomScale : 1f;
-        preview.scale = isRescaled ? randomScale : 1f;
-        outline.scale = isRescaled ? randomScale : 1f;
-        drawer.rescale(isRescaled, randomScale);
     }
 
     @Override
     public void reloadTextures(){
-        base = new TextureRegion(((DrawTurret)drawer).base);
-        liquid = new TextureRegion(((DrawTurret)drawer).liquid);
-        top = new TextureRegion(((DrawTurret)drawer).top);
-        heat = new TextureRegion(((DrawTurret)drawer).heat);
-        preview = new TextureRegion(((DrawTurret)drawer).preview);
-        outline = new TextureRegion(((DrawTurret)drawer).outline);
+        super.reloadTextures();
     }
 
     @Override

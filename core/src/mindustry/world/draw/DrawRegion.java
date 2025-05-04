@@ -8,6 +8,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawRegion extends DrawBlock{
     public TextureRegion region;
     public String suffix = "";
@@ -42,13 +44,28 @@ public class DrawRegion extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("region", new TextureRegion(region));
+    }
+
+    @Override
     public void draw(Building build){
         float z = Draw.z();
         if(layer > 0) Draw.z(layer);
-        if(spinSprite){
-            Drawf.spinSprite(region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
-        }else{
-            Draw.rect(region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            if (spinSprite) {
+                Drawf.spinSprite(build.block.textureRegions.get("region"), build.x + x, build.y + y,
+                        build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
+            } else {
+                Draw.rect(build.block.textureRegions.get("region"), build.x + x, build.y + y,
+                        build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
+            }
+        } else {
+            if (spinSprite) {
+                Drawf.spinSprite(region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
+            } else {
+                Draw.rect(region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed + rotation + (buildingRotate ? build.rotdeg() : 0));
+            }
         }
         Draw.z(z);
     }
@@ -56,7 +73,11 @@ public class DrawRegion extends DrawBlock{
     @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
         if(!drawPlan) return;
-        Draw.rect(region, plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && block.isRedrawned) {
+            Draw.rect(block.textureRegions.get("region"), plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+        } else {
+            Draw.rect(region, plan.drawx(), plan.drawy(), (buildingRotate ? plan.rotation * 90f : 0));
+        }
     }
 
     @Override
@@ -67,5 +88,6 @@ public class DrawRegion extends DrawBlock{
     @Override
     public void load(Block block){
         region = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

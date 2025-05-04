@@ -39,9 +39,9 @@ public class PayloadBlock extends Block{
     @Override
     public void reloadTextures(){
         super.reloadTextures();
-        topRegion = new TextureRegion(topRegion);
-        outRegion = new TextureRegion(outRegion);
-        inRegion = new TextureRegion(inRegion);
+        if(topRegion != null) topRegion = new TextureRegion(topRegion);
+        if(outRegion != null) outRegion = new TextureRegion(outRegion);
+        if(inRegion != null) inRegion = new TextureRegion(inRegion);
     }
 
     @Override

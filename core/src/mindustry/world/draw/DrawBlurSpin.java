@@ -26,6 +26,12 @@ public class DrawBlurSpin extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("blurSpinRegion", new TextureRegion(region));
+        block.textureRegions.put("blurRegion", new TextureRegion(blurRegion));
+    }
+
+    @Override
     public void draw(Building build){
         Drawf.spinSprite(build.warmup() > blurThresh ? blurRegion : region, build.x + x, build.y + y, build.totalProgress() * rotateSpeed);
     }
@@ -39,5 +45,6 @@ public class DrawBlurSpin extends DrawBlock{
     public void load(Block block){
         region = Core.atlas.find(block.name + suffix);
         blurRegion = Core.atlas.find(block.name + suffix + "-blur");
+        super.load(block);
     }
 }

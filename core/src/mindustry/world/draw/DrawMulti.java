@@ -28,18 +28,14 @@ public class DrawMulti extends DrawBlock{
 
     @Override
     public void rescale(Boolean isRescaled, float randomScale){
-        for (DrawBlock drawer : drawers) {
-            drawer.rescale(isRescaled, randomScale);
-        }
+
     }
 
     @Override
-    public TextureRegion[] reloadTextures() {
-        List<TextureRegion> regions = new ArrayList<>();
-        for (DrawBlock drawer : drawers) {
-            regions.addAll(Arrays.stream(drawer.reloadTextures()).toList());
+    public void reloadTextures(Block block) {
+        for(DrawBlock drawer : drawers) {
+            drawer.reloadTextures(block);
         }
-        return regions.toArray(new TextureRegion[0]);
     }
 
     @Override

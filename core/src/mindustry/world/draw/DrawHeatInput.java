@@ -11,6 +11,8 @@ import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.blocks.heat.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawHeatInput extends DrawBlock{
     public String suffix = "-heat";
     public Color heatColor = new Color(1f, 0.22f, 0.22f, 0.8f);
@@ -31,6 +33,11 @@ public class DrawHeatInput extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("heatInput", new TextureRegion(heat));
+    }
+
+    @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
     }
 
@@ -44,7 +51,12 @@ public class DrawHeatInput extends DrawBlock{
                 if(side[i] > 0){
                     Draw.blend(Blending.additive);
                     Draw.color(heatColor, side[i] / hc.heatRequirement() * (heatColor.a * (1f - heatPulse + Mathf.absin(heatPulseScl, heatPulse))));
-                    Draw.rect(heat, build.x, build.y, i * 90f);
+                    if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+                        Draw.rect(build.block.textureRegions.get("heatInput"), build.x, build.y,
+                                i *90f);
+                    } else {
+                        Draw.rect(heat, build.x, build.y, i * 90f);
+                    }
                     Draw.blend();
                     Draw.color();
                 }
@@ -56,5 +68,6 @@ public class DrawHeatInput extends DrawBlock{
     @Override
     public void load(Block block){
         heat = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

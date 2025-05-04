@@ -5,6 +5,7 @@ import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawCircles extends DrawBlock{
     public Color color = Color.valueOf("7457ce");
@@ -30,6 +31,9 @@ public class DrawCircles extends DrawBlock{
         }
         radius = isRescaled ? randomScale * originalRadius : originalRadius;
     }
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

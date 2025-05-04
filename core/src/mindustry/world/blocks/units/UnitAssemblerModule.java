@@ -41,11 +41,11 @@ public class UnitAssemblerModule extends PayloadBlock{
     @Override
     public void reloadTextures(){
         super.reloadTextures();
-        topRegion = new TextureRegion(topRegion);
-        outRegion = new TextureRegion(outRegion);
-        inRegion = new TextureRegion(inRegion);
-        sideRegion1 = new TextureRegion(sideRegion1);
-        sideRegion2 = new TextureRegion(sideRegion2);
+        if(topRegion != null) topRegion = new TextureRegion(topRegion);
+        if(outRegion != null) outRegion = new TextureRegion(outRegion);
+        if(inRegion != null) inRegion = new TextureRegion(inRegion);
+        if(sideRegion1 != null) sideRegion1 = new TextureRegion(sideRegion1);
+        if(sideRegion2 != null) sideRegion2 = new TextureRegion(sideRegion2);
     }
 
     @Override

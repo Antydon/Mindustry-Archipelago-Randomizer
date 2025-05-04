@@ -7,6 +7,7 @@ import arc.math.geom.*;
 import arc.util.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
+import mindustry.world.Block;
 
 import static mindustry.Vars.*;
 
@@ -28,6 +29,9 @@ public class DrawPulseShape extends DrawBlock{
     public void rescale(Boolean isRescaled, float randomScale){
         radiusScl = isRescaled ? randomScale : 1f;
     }
+
+    @Override
+    public void reloadTextures(Block block) {}
 
     @Override
     public void draw(Building build){

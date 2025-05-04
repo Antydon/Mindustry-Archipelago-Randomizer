@@ -24,6 +24,9 @@ public class DrawLiquidTile extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {}
+
+    @Override
     public void draw(Building build){
         Liquid drawn = drawLiquid != null ? drawLiquid : build.liquids.current();
         LiquidBlock.drawTiledFrames(build.block.size, build.x, build.y, padLeft, padRight, padTop, padBottom, drawn, build.liquids.get(drawn) / build.block.liquidCapacity * alpha);

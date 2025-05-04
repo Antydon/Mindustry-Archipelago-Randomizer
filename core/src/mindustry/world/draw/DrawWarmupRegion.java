@@ -9,6 +9,8 @@ import mindustry.entities.units.*;
 import mindustry.gen.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawWarmupRegion extends DrawBlock{
     public float sinMag = 0.6f, sinScl = 8f;
     public Color color = Color.valueOf("ff9b59");
@@ -20,6 +22,11 @@ public class DrawWarmupRegion extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("warmUp", new TextureRegion(region));
+    }
+
+    @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
 
     }
@@ -28,14 +35,17 @@ public class DrawWarmupRegion extends DrawBlock{
     public void draw(Building build){
         Draw.color(color);
         Draw.alpha(build.warmup() * (1f - sinMag) + Mathf.absin(Time.time, sinScl, sinMag) * build.warmup());
-        Draw.rect(region, build.x, build.y);
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Draw.rect(build.block.textureRegions.get("warmUp"), build.x, build.y);
+        } else {
+            Draw.rect(region, build.x, build.y);
+        }
         Draw.reset();
     }
 
     @Override
     public void load(Block block){
-        super.load(block);
-
         region = Core.atlas.find(block.name + "-top");
+        super.load(block);
     }
 }

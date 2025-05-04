@@ -7,8 +7,12 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.entities.units.*;
 import mindustry.gen.*;
+import mindustry.randomizer.RandomizedBlocks;
+import mindustry.randomizer.enums.CampaignType;
 import mindustry.world.*;
 import mindustry.world.blocks.production.*;
+
+import static mindustry.Vars.randomizer;
 
 /** An implementation of custom rendering behavior for a crafter block.
  * This is used mostly for mods. */
@@ -25,15 +29,17 @@ public abstract class DrawBlock{
     /** Change TextureRegion scale to for the block randomizer. */
     public void rescale(Boolean isRescaled, float randomScale){}
 
-    /** Return the new list of TextureRegion to the caller */
-    public TextureRegion[] reloadTextures(){
-        return new TextureRegion[0];
-    }
+    /**
+     * Return the new list of TextureRegion to the caller
+     */
+    public abstract void reloadTextures(Block block);
 
 
     /** Draws the block itself. */
     public void draw(Building build){
-
+        if(build.block.failedTexturesReload){
+            reloadTextures(build.block);
+        }
     }
 
     /** Draws any extra light for the block. */
@@ -46,9 +52,24 @@ public abstract class DrawBlock{
 
     }
 
-    /** Load any relevant texture regions. */
+    /** Load any relevant drawer textureRegion to block.textureRegions. */
     public void load(Block block){
+        if(randomizer.worldState.options.getRandomizeBlocksSize()) {
+            var campaign = randomizer.worldState.options.getCampaign();
 
+            if((campaign.equals(CampaignType.SERPULO) || campaign.equals(CampaignType.ALL)) &&
+                    RandomizedBlocks.getBlocksSerpulo().stream().anyMatch(blk ->
+                    blk.name.equalsIgnoreCase(block.name))){
+                reloadTextures(block);
+            }
+
+            if ((campaign.equals(CampaignType.EREKIR) || campaign.equals(CampaignType.ALL)) &&
+                    RandomizedBlocks.getBlocksSerpulo().stream().anyMatch(b ->
+                            b.name.equalsIgnoreCase(block.name))){
+                reloadTextures(block);
+            }
+            block.isRedrawned = true;
+        }
     }
 
     /** @return the generated icons to be used for this block. */

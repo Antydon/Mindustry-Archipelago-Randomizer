@@ -1,6 +1,7 @@
 package mindustry.content;
 
 import arc.graphics.*;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.*;
 import arc.struct.*;
 import mindustry.*;
@@ -1411,7 +1412,8 @@ public class Blocks{
                 radius = 10f;
                 amount = 3;
             }}, new DrawLiquidRegion(Liquids.slag), new DrawDefault(), new DrawHeatInput(),
-            new DrawHeatRegion(){{
+            new DrawHeatRegion(){
+                {
                 color = Color.valueOf("ff6060ff");
             }},
             new DrawHeatRegion("-vents"){{
@@ -1479,7 +1481,9 @@ public class Blocks{
                 layerSpeed = -0.9f;
             }}, new DrawMultiWeave(){{
                 glowColor = new Color(1f, 0.4f, 0.4f, 0.8f);
-            }}, new DrawDefault(), new DrawHeatInput(), new DrawHeatRegion("-vents"){{
+            }}, new DrawDefault(), new DrawHeatInput(), new DrawHeatRegion("-vents"){
+
+                {
                 color = new Color(1f, 0.4f, 0.3f, 1f);
             }});
 

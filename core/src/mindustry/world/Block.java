@@ -701,12 +701,16 @@ public class Block extends UnlockableContent implements Senseable {
      */
     public boolean isRescaled = false;
     /**
+     * If value is true, the block drawers will be rescaled.
+     */
+    public boolean isRedrawned = false;
+    /**
      * The original size of the block in case of rescaling. The value the AI teams must use
      */
     public int originalSize = 1;
 
     /**
-     * The original size of the block in case of rescaling. The value the AI teams must use
+     * The randomize size of the block in case of rescaling. The value the AI teams must use
      */
     public int randomizeSize = 1;
 
@@ -714,6 +718,10 @@ public class Block extends UnlockableContent implements Senseable {
      * The ratio of the new scale to calculate.
      */
     public float randomScale = 0f;
+
+    public Hashtable<String, TextureRegion> textureRegions = new Hashtable<>();
+
+    public boolean failedTexturesReload = false;
 
     public Block(String name) {
         super(name);
@@ -727,12 +735,16 @@ public class Block extends UnlockableContent implements Senseable {
     public void rescale() {
         if(randomScale == 0f) {
             randomScale = (float) randomizeSize / originalSize;
-            randomScale = (float) randomizeSize / originalSize;
+            reloadTextures();
         }
         if (randomizeSize == originalSize) { return; }
         region.scale =  isRescaled ? randomScale : 1f;
         teamRegion.scale = isRescaled ? randomScale : 1f;
         teamRegions[player.team().id].scale = isRescaled ? randomScale : 1f;
+        Set<String> setTextureRegion = textureRegions.keySet();
+        for(String key : setTextureRegion) {
+            textureRegions.get(key).scale = isRescaled ? randomScale : 1f;
+        }
         // Should not be called on base block
         if (customShadow) {
             customShadowRegion.scale =  isRescaled ? randomScale : 1f;
@@ -1721,6 +1733,9 @@ public class Block extends UnlockableContent implements Senseable {
                     variantShadowRegions[i] = Core.atlas.find(name + "-shadow" + (i + 1));
                 }
             }
+        }
+        if(randomizer.worldState.options.getRandomizeBlocksSize()) {
+            reloadTextures();
         }
     }
 

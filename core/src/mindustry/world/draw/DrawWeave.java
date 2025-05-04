@@ -8,6 +8,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawWeave extends DrawBlock{
     public TextureRegion weave;
 
@@ -18,8 +20,17 @@ public class DrawWeave extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("weave", new TextureRegion(weave));
+    }
+
+    @Override
     public void draw(Building build){
-        Draw.rect(weave, build.x, build.y, build.totalProgress());
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Draw.rect(build.block.textureRegions.get("weave"), build.x, build.y);
+        } else {
+            Draw.rect(weave, build.x, build.y, build.totalProgress());
+        }
 
         Draw.color(Pal.accent);
         Draw.alpha(build.warmup());
@@ -41,5 +52,6 @@ public class DrawWeave extends DrawBlock{
     @Override
     public void load(Block block){
         weave = Core.atlas.find(block.name + "-weave");
+        super.load(block);
     }
 }

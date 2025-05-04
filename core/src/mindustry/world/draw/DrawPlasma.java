@@ -9,6 +9,12 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static mindustry.Vars.randomizer;
+
 public class DrawPlasma extends DrawFlame{
     public TextureRegion[] regions;
     public String suffix = "-plasma-";
@@ -24,11 +30,19 @@ public class DrawPlasma extends DrawFlame{
     }
 
     @Override
+    public void reloadTextures(Block block){
+        for (int i = 0; i < regions.length; i++) {
+            block.textureRegions.put("plasmaRegion" + i,new TextureRegion(regions[i]));
+        }
+    }
+
+    @Override
     public void load(Block block){
         regions = new TextureRegion[plasmas];
         for(int i = 0; i < regions.length; i++){
             regions[i] = Core.atlas.find(block.name + suffix + i);
         }
+        super.load(block);
     }
 
     @Override
@@ -39,14 +53,32 @@ public class DrawPlasma extends DrawFlame{
     @Override
     public void draw(Building build){
         Draw.blend(Blending.additive);
-        for(int i = 0; i < regions.length; i++){
-            float r = ((float)regions[i].width * regions[i].scl() - 3f + Mathf.absin(Time.time, 2f + i * 1f, 5f - i * 0.5f));
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            List<TextureRegion> lst = new ArrayList<>();
+            Set<String> setTextureRegion = build.block.textureRegions.keySet();
+            for (String key : setTextureRegion) {
+                if(key.startsWith("plasmaRegion")) {
+                    lst.add(build.block.textureRegions.get(key));
+                }
+            }
+            for (int i = 0; i < regions.length; i++) {
+                float r = ((float) lst.get(i).width * lst.get(i).scl() - 3f + Mathf.absin(Time.time,
+                        2f + i * 1f, 5f - i * 0.5f));
 
-            Draw.color(plasma1, plasma2, (float)i / regions.length);
-            Draw.alpha((0.3f + Mathf.absin(Time.time, 2f + i * 2f, 0.3f + i * 0.05f)) * build.warmup());
-            Draw.rect(regions[i], build.x, build.y, r, r, build.totalProgress() * (12 + i * 6f));
+                Draw.color(plasma1, plasma2, (float) i / lst.size());
+                Draw.alpha((0.3f + Mathf.absin(Time.time, 2f + i * 2f, 0.3f + i * 0.05f)) * build.warmup());
+                Draw.rect(lst.get(i), build.x, build.y, r, r, build.totalProgress() * (12 + i * 6f));
+            }
+        } else {
+            for (int i = 0; i < regions.length; i++) {
+                float r = ((float) regions[i].width * regions[i].scl() - 3f + Mathf.absin(Time.time, 2f + i * 1f, 5f - i * 0.5f));
+
+                Draw.color(plasma1, plasma2, (float) i / regions.length);
+                Draw.alpha((0.3f + Mathf.absin(Time.time, 2f + i * 2f, 0.3f + i * 0.05f)) * build.warmup());
+                Draw.rect(regions[i], build.x, build.y, r, r, build.totalProgress() * (12 + i * 6f));
+            }
         }
-        Draw.color();
-        Draw.blend();
+            Draw.color();
+            Draw.blend();
+        }
     }
-}

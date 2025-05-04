@@ -4,6 +4,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
+import mindustry.world.Block;
 
 public class DrawShape extends DrawBlock{
     public Color color = Pal.accent.cpy();
@@ -18,6 +19,9 @@ public class DrawShape extends DrawBlock{
         if(originalRadius == 0f) originalRadius = radius;
         radius = isRescaled ? randomScale * originalRadius : originalRadius;
     }
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

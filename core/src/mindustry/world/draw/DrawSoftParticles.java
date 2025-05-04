@@ -25,6 +25,11 @@ public class DrawSoftParticles extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("softParticule", new TextureRegion(region));
+    }
+
+    @Override
     public void draw(Building build){
 
         if(build.warmup() > 0f && color.a > 0.001f){
@@ -61,8 +66,7 @@ public class DrawSoftParticles extends DrawBlock{
 
     @Override
     public void load(Block block){
+       region = Core.atlas.find("circle-shadow");
         super.load(block);
-
-        region = Core.atlas.find("circle-shadow");
     }
 }

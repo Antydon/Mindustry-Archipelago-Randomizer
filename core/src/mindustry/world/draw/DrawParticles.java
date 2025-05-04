@@ -6,6 +6,7 @@ import arc.math.*;
 import arc.math.Interp.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawParticles extends DrawBlock{
     public Color color = Color.valueOf("f2d585");
@@ -17,6 +18,9 @@ public class DrawParticles extends DrawBlock{
     public Interp particleInterp = new PowIn(1.5f);
     public Interp particleSizeInterp = Interp.slope;
     public Blending blending = Blending.normal;
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

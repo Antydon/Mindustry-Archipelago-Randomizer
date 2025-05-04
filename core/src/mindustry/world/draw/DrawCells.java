@@ -9,6 +9,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawCells extends DrawBlock{
     public TextureRegion middle;
 
@@ -22,8 +24,18 @@ public class DrawCells extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("middle", new TextureRegion(middle));
+    }
+
+    @Override
     public void draw(Building build){
-        Drawf.liquid(middle, build.x, build.y, build.warmup(), color);
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Drawf.liquid(build.block.textureRegions.get("middle"), build.x, build.y,
+                    build.warmup(), color);
+        } else {
+            Drawf.liquid(middle, build.x, build.y, build.warmup(), color);
+        }
 
         if(build.warmup() > 0.001f){
             rand.setSeed(build.id);
@@ -49,5 +61,6 @@ public class DrawCells extends DrawBlock{
     @Override
     public void load(Block block){
         middle = Core.atlas.find(block.name + "-middle");
+        super.load(block);
     }
 }

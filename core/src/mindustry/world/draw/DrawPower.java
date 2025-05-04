@@ -37,29 +37,68 @@ public class DrawPower extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        if (fullRegion != null && emptyRegion != null) {
+            block.textureRegions.put("powerFull", new TextureRegion(fullRegion));
+            block.textureRegions.put("powerEmpty", new TextureRegion(emptyRegion));
+        } else {
+            block.failedTexturesReload = true;
+        }
+    }
+
+    @Override
     public void draw(Building build){
         float z = Draw.z();
         if(layer > 0) Draw.z(layer);
-        if(mixcol){
-            Draw.color(emptyLightColor, fullLightColor, build.power.status);
-            if(emptyRegion.found()){
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned){
+            drawRandom(build);
+        } else {
+            if (mixcol) {
+                Draw.color(emptyLightColor, fullLightColor, build.power.status);
+                if (emptyRegion.found()) {
+                    Draw.rect(emptyRegion, build.x, build.y);
+                } else {
+                    Fill.square(build.x, build.y, (tilesize * build.block.size / 2f - 1) * Draw.xscl);
+                }
+            } else {
                 Draw.rect(emptyRegion, build.x, build.y);
-            }else{
-                Fill.square(build.x, build.y, (tilesize * build.block.size / 2f - 1) * Draw.xscl);
+                Draw.alpha(build.power.status);
+                Draw.rect(fullRegion, build.x, build.y);
             }
-        }else{
-            Draw.rect(emptyRegion, build.x, build.y);
-            Draw.alpha(build.power.status);
-            Draw.rect(fullRegion, build.x, build.y);
         }
         Draw.color();
         Draw.z(z);
     }
 
+    private void drawRandom(Building build){
+        if(build.block.failedTexturesReload) {
+            reloadTextures(build.block);
+        }
+        if(mixcol){
+            Draw.color(emptyLightColor, fullLightColor, build.power.status);
+            if(build.block.textureRegions.get("powerEmpty").found()){
+                Draw.rect(build.block.textureRegions.get("powerEmpty"), build.x, build.y);
+            }else{
+                Fill.square(build.x, build.y, (tilesize * build.block.size / 2f - 1) * Draw.xscl);
+            }
+        }else{
+            Draw.rect(build.block.textureRegions.get("powerEmpty"), build.x, build.y);
+            Draw.alpha(build.power.status);
+            Draw.rect(build.block.textureRegions.get("powerFull"), build.x, build.y);
+        }
+    }
+
     @Override
     public void drawPlan(Block block, BuildPlan plan, Eachable<BuildPlan> list){
         if(!drawPlan || mixcol || !emptyRegion.found()) return;
-        Draw.rect(emptyRegion, plan.drawx(), plan.drawy());
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && block.isRedrawned) {
+            if(block.failedTexturesReload) {
+                reloadTextures(block);
+            }
+            Draw.rect(block.textureRegions.get("powerEmpty"), plan.drawx(), plan.drawy());
+        } else {
+            Draw.rect(emptyRegion, plan.drawx(), plan.drawy());
+        }
     }
 
     @Override
@@ -75,5 +114,6 @@ public class DrawPower extends DrawBlock{
             emptyRegion = Core.atlas.find(block.name + suffix + "-empty");
             fullRegion = Core.atlas.find(block.name + suffix + "-full");
         }
+        super.load(block);
     }
 }

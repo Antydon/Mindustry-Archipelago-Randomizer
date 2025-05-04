@@ -9,6 +9,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawFlame extends DrawBlock{
     public Color flameColor = Color.valueOf("ffc999");
     public TextureRegion top;
@@ -26,6 +28,7 @@ public class DrawFlame extends DrawBlock{
     public void load(Block block){
         top = Core.atlas.find(block.name + "-top");
         block.clipSize = Math.max(block.clipSize, (lightRadius + lightSinMag) * 2f * block.size);
+        super.load(block);
     }
 
     @Override
@@ -34,8 +37,8 @@ public class DrawFlame extends DrawBlock{
     }
 
     @Override
-    public TextureRegion[] reloadTextures() {
-        return new TextureRegion[]{new TextureRegion(top)};
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("flameTop", new TextureRegion(top));
     }
 
     @Override
@@ -48,7 +51,11 @@ public class DrawFlame extends DrawBlock{
             Draw.z(Layer.block + 0.01f);
 
             Draw.alpha(build.warmup());
-            Draw.rect(top, build.x, build.y);
+            if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+                Draw.rect(build.block.textureRegions.get("flameTop"), build.x, build.y);
+            } else {
+                Draw.rect(top, build.x, build.y);
+            }
 
             Draw.alpha(((1f - g) + Mathf.absin(Time.time, 8f, g) + Mathf.random(r) - r) * build.warmup());
 

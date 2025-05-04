@@ -6,6 +6,7 @@ import arc.math.*;
 import arc.math.Interp.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawCrucibleFlame extends DrawBlock{
     public Color flameColor = Color.valueOf("f58349"), midColor = Color.valueOf("f2d585");
@@ -20,6 +21,9 @@ public class DrawCrucibleFlame extends DrawBlock{
     public void rescale(Boolean isRescaled, float randomScale){
         flameRadiusScl = isRescaled ? randomScale: 1f;
     }
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

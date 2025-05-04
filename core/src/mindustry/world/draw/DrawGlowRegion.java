@@ -8,6 +8,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawGlowRegion extends DrawBlock{
     public Blending blending = Blending.additive;
     public String suffix = "-glow";
@@ -29,7 +31,6 @@ public class DrawGlowRegion extends DrawBlock{
         this.rotate = rotate;
     }
 
-
     public DrawGlowRegion(String suffix){
         this.suffix = suffix;
     }
@@ -37,6 +38,11 @@ public class DrawGlowRegion extends DrawBlock{
     @Override
     public void rescale(Boolean isRescaled, float randomScale){
         region.scale = isRescaled ? randomScale : 1f;
+    }
+
+    @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("glowRegion", new TextureRegion(region));
     }
 
     @Override
@@ -48,7 +54,12 @@ public class DrawGlowRegion extends DrawBlock{
         Draw.blend(blending);
         Draw.color(color);
         Draw.alpha((Mathf.absin(build.totalProgress(), glowScale, alpha) * glowIntensity + 1f - glowIntensity) * build.warmup() * alpha);
-        Draw.rect(region, build.x, build.y, build.totalProgress() * rotateSpeed + (rotate ? build.rotdeg() : 0f));
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Draw.rect(build.block.textureRegions.get("glowRegion"), build.x, build.y,
+                    build.totalProgress() * rotateSpeed + (rotate ? build.rotdeg() : 0f));
+        } else {
+            Draw.rect(region, build.x, build.y, build.totalProgress() * rotateSpeed + (rotate ? build.rotdeg() : 0f));
+        }
         Draw.reset();
         Draw.blend();
         Draw.z(z);
@@ -57,5 +68,6 @@ public class DrawGlowRegion extends DrawBlock{
     @Override
     public void load(Block block){
         region = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

@@ -15,7 +15,6 @@ import mindustry.game.EventType.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;
 import mindustry.gen.*;
-import mindustry.randomizer.MindustryOptions;
 import mindustry.world.*;
 import mindustry.world.blocks.environment.Floor.*;
 import mindustry.world.blocks.power.*;

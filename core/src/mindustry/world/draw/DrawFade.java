@@ -4,7 +4,10 @@ import arc.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import mindustry.gen.*;
+import mindustry.graphics.Drawf;
 import mindustry.world.*;
+
+import static mindustry.Vars.randomizer;
 
 public class DrawFade extends DrawBlock{
     public String suffix = "-top";
@@ -17,14 +20,24 @@ public class DrawFade extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("fadeRegion", new TextureRegion(region));
+    }
+
+    @Override
     public void draw(Building build){
         Draw.alpha(Mathf.absin(build.totalProgress(), scale, alpha) * build.warmup());
-        Draw.rect(region, build.x, build.y);
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Draw.rect(build.block.textureRegions.get("fadeRegion"), build.x, build.y);
+        } else {
+            Draw.rect(region, build.x, build.y);
+        }
         Draw.reset();
     }
 
     @Override
     public void load(Block block){
         region = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

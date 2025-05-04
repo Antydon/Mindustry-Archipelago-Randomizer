@@ -3,6 +3,7 @@ package mindustry.world.draw;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawSpikes extends DrawBlock{
     public Color color = Color.valueOf("7457ce");
@@ -25,6 +26,9 @@ public class DrawSpikes extends DrawBlock{
         if (originalRadius == 0f) originalRadius = radius;
         radius = isRescaled ? randomScale * originalRadius : originalRadius;
     }
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

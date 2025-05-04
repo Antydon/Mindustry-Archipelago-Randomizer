@@ -9,6 +9,8 @@ import mindustry.graphics.*;
 import mindustry.world.*;
 import mindustry.world.blocks.production.HeatCrafter.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawHeatRegion extends DrawBlock{
     public Color color = new Color(1f, 0.22f, 0.22f, 0.8f);
     public float pulse = 0.3f, pulseScl = 10f;
@@ -34,6 +36,11 @@ public class DrawHeatRegion extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("heat", new TextureRegion(heat));
+    }
+
+    @Override
     public void draw(Building build){
         Draw.z(Layer.blockAdditive);
         if(build instanceof HeatCrafterBuild hc && hc.heat > 0){
@@ -42,7 +49,11 @@ public class DrawHeatRegion extends DrawBlock{
             if(layer > 0) Draw.z(layer);
             Draw.blend(Blending.additive);
             Draw.color(color, Mathf.clamp(hc.heat / hc.heatRequirement()) * (color.a * (1f - pulse + Mathf.absin(pulseScl, pulse))));
-            Draw.rect(heat, build.x, build.y);
+            if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+                Draw.rect(build.block.textureRegions.get("heat"), build.x, build.y);
+            } else {
+                Draw.rect(heat, build.x, build.y);
+            }
             Draw.blend();
             Draw.color();
             Draw.z(z);
@@ -52,5 +63,6 @@ public class DrawHeatRegion extends DrawBlock{
     @Override
     public void load(Block block){
         heat = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

@@ -122,6 +122,7 @@ public class RandomizedBlocks {
         //turrets
         blocksSerpulo.add(Blocks.duo);
         blocksSerpulo.add(Blocks.scatter);
+        blocksSerpulo.add(Blocks.scorch);
         blocksSerpulo.add(Blocks.hail);
         blocksSerpulo.add(Blocks.wave);
         blocksSerpulo.add(Blocks.lancer);

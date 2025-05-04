@@ -8,6 +8,8 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawCultivator extends DrawBlock{
     public Color plantColor = Color.valueOf("5541b1");
     public Color plantColorLight = Color.valueOf("7457ce");
@@ -25,21 +27,30 @@ public class DrawCultivator extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("cultivatorMiddle", new TextureRegion(middle));
+    }
+
+    @Override
     public void draw(Building build){
-        Drawf.liquid(middle, build.x, build.y, build.warmup(), plantColor);
-
-        Draw.color(bottomColor, plantColorLight, build.warmup());
-
-        rand.setSeed(build.pos());
-        for(int i = 0; i < bubbles; i++){
-            float x = rand.range(spread), y = rand.range(spread);
-            float life = 1f - ((Time.time / timeScl + rand.random(recurrence)) % recurrence);
-
-            if(life > 0){
-                Lines.stroke(build.warmup() * (life + strokeMin));
-                Lines.poly(build.x + x, build.y + y, sides, (1f - life) * radius);
-            }
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Drawf.liquid(build.block.textureRegions.get("cultivatorMiddle"), build.x, build.y,
+                    build.warmup(), plantColor);
+        } else {
+            Drawf.liquid(middle, build.x, build.y, build.warmup(), plantColor);
         }
+            Draw.color(bottomColor, plantColorLight, build.warmup());
+
+            rand.setSeed(build.pos());
+            for (int i = 0; i < bubbles; i++) {
+                float x = rand.range(spread), y = rand.range(spread);
+                float life = 1f - ((Time.time / timeScl + rand.random(recurrence)) % recurrence);
+
+                if (life > 0) {
+                    Lines.stroke(build.warmup() * (life + strokeMin));
+                    Lines.poly(build.x + x, build.y + y, sides, (1f - life) * radius);
+                }
+            }
 
         Draw.color();
     }
@@ -47,5 +58,6 @@ public class DrawCultivator extends DrawBlock{
     @Override
     public void load(Block block){
         middle = Core.atlas.find(block.name + "-middle");
+        super.load(block);
     }
 }

@@ -7,6 +7,8 @@ import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.world.*;
 
+import static mindustry.Vars.randomizer;
+
 public class DrawLiquidRegion extends DrawBlock{
     public Liquid drawLiquid;
     public TextureRegion liquid;
@@ -26,12 +28,20 @@ public class DrawLiquidRegion extends DrawBlock{
     }
 
     @Override
+    public void reloadTextures(Block block) {
+        block.textureRegions.put("liquid", new TextureRegion(liquid));
+    }
+
+    @Override
     public void draw(Building build){
         Liquid drawn = drawLiquid != null ? drawLiquid : build.liquids.current();
-        Drawf.liquid(liquid, build.x, build.y,
-            build.liquids.get(drawn) / build.block.liquidCapacity * alpha,
-            drawn.color
-        );
+        if(randomizer.worldState.options.getRandomizeBlocksSize() && build.block.isRedrawned) {
+            Drawf.liquid(build.block.textureRegions.get("liquid"), build.x, build.y,
+                    build.liquids.get(drawn) / build.block.liquidCapacity * alpha, drawn.color);
+
+        } else {
+            Drawf.liquid(liquid, build.x, build.y, build.liquids.get(drawn) / build.block.liquidCapacity * alpha, drawn.color);
+        }
     }
 
     @Override
@@ -41,5 +51,6 @@ public class DrawLiquidRegion extends DrawBlock{
         }
 
         liquid = Core.atlas.find(block.name + suffix);
+        super.load(block);
     }
 }

@@ -4,6 +4,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawBubbles extends DrawBlock{
     public Color color = Color.valueOf("7457ce");
@@ -29,6 +30,9 @@ public class DrawBubbles extends DrawBlock{
         }
         spread = isRescaled ? randomScale * originalSpread : originalSpread;
     }
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

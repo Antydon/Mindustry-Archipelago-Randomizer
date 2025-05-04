@@ -688,7 +688,7 @@ public class MindustryOptions {
         this.campaign = settings.getInt(CAMPAIGN_CHOICE.value);
         this.goal = settings.getInt(AP_GOAL.value);
         this.randomizeCoreUnitsWeapon = settings.getBool(RANDOMIZE_CORE_UNITS_WEAPON.value);
-        this.randomizeBlocksSize = false; //settings.getBool(RANDOMIZE_BLOCKS_SIZE.value);
+        this.randomizeBlocksSize = true; //settings.getBool(RANDOMIZE_BLOCKS_SIZE.value);
         this.logisticDistribution = settings.getInt(LOGISTIC_DISTRIBUTION.value);
         this.progressiveDrills = settings.getBool(PROGRESSIVE_DRILLS.value);
         this.progressiveGenerators = settings.getBool(PROGRESSIVE_GENERATORS.value);
@@ -774,6 +774,5 @@ public class MindustryOptions {
         } else {
             block.randomizeSize = (random.nextInt(maxBlocksSize - minBlocksSize) + minBlocksSize);
         }
-        block.reloadTextures();
     }
 }

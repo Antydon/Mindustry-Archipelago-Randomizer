@@ -9,6 +9,9 @@ import mindustry.world.*;
 public class DrawDefault extends DrawBlock{
 
     @Override
+    public void reloadTextures(Block block) {}
+
+    @Override
     public void draw(Building build){
         Draw.rect(build.block.region, build.x, build.y, build.drawrot());
     }

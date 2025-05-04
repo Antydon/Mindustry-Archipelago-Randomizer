@@ -5,6 +5,7 @@ import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.world.Block;
 
 public class DrawArcSmelt extends DrawBlock{
     public Color flameColor = Color.valueOf("f58349"), midColor = Color.valueOf("f2d585");
@@ -15,6 +16,9 @@ public class DrawArcSmelt extends DrawBlock{
     public float particleLife = 40f, particleRad = 7f, particleStroke = 1.1f, particleLen = 3f;
     public boolean drawCenter = true;
     public Blending blending = Blending.additive;
+
+    @Override
+    public void reloadTextures(Block block) { }
 
     @Override
     public void draw(Building build){

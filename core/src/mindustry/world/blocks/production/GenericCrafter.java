@@ -45,8 +45,6 @@ public class GenericCrafter extends Block{
 
     public DrawBlock drawer = new DrawDefault();
 
-    public TextureRegion[] textureRegions;
-
     public GenericCrafter(String name){
         super(name);
         update = true;
@@ -61,36 +59,11 @@ public class GenericCrafter extends Block{
 
     public void rescale() {
         super.rescale();
-        drawer.rescale(isRescaled, randomScale);
-        if (drawer instanceof DrawMulti drawMulti) {
-            for (int i = 0; i < drawMulti.drawers.length; i++) {
-                if (drawMulti.drawers[i] instanceof DrawRegion drawR) {
-                    drawR.region.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawCultivator drawC){
-                    drawC.middle.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawLiquidRegion drawL){
-                    drawL.liquid.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawCultivator drawC){
-                    drawC.middle.scale = isRescaled ? randomScale: 1f;
-                }else if (drawMulti.drawers[i] instanceof DrawPistons drawP){
-                    drawP.region1.scale = isRescaled ? randomScale: 1f;
-                    drawP.region2.scale = isRescaled ? randomScale: 1f;
-                    drawP.regiont.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawWeave drawW){
-                    drawW.weave.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawFlame drawF){
-                    drawF.top.scale = isRescaled ? randomScale: 1f;
-                } else if (drawMulti.drawers[i] instanceof DrawCircles drawC){
-                    drawC.radius = isRescaled ? randomScale: 1f;
-                }
-            }
-        }
     }
 
     @Override
     public void reloadTextures(){ //return a Dictionnary<string, TextureRegion>
         super.reloadTextures();
-        textureRegions = drawer.reloadTextures();
     }
 
     @Override
