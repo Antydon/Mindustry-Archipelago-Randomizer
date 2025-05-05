@@ -30,6 +30,8 @@ import mindustry.randomizer.enums.DeathLinkMode;
 import mindustry.randomizer.enums.LogisticsDistribution;
 import mindustry.type.*;
 import mindustry.world.*;
+import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.ItemBridge;
 import mindustry.world.blocks.payloads.*;
 import mindustry.world.blocks.storage.*;
 import org.junit.jupiter.api.*;
@@ -43,6 +45,7 @@ import static mindustry.Vars.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.*;
 
+@SuppressWarnings("MissingJavadoc")
 public class ApplicationTests{
     static Map testMap;
     static boolean initialized;
@@ -196,7 +199,9 @@ public class ApplicationTests{
 
         assertEquals(string, con.name);
     }
+
 //region AnukenTest
+
     @Test
     void writeRules(){
         ByteBuffer buffer = ByteBuffer.allocate(1000);
@@ -1015,8 +1020,22 @@ public class ApplicationTests{
     }
 
     @Test
+    void fasterConveyorSpeedTest() {
+        SlotData slot = new SlotData("test-belt");
+        randomizer.worldState.options.fillOptions(slot);
+        assertTrue(randomizer.worldState.options.getFasterConveyor());
+        randomizer.worldState.options.applySerpuloFasterConveyor();
+
+        boolean isFaster =
+                ((Conveyor) content.block("conveyor")).speed == 0.06f &&
+                        ((ItemBridge) content.block("phase-conveyor")).transportTime == 1f;
+
+        assertTrue(isFaster);
+    }
+
+    @Test
     void allBlockRandomizeTest(){
-        SlotData slot = new SlotData("TestBlock");
+        SlotData slot = new SlotData("test-block");
         randomizer.worldState.options.fillOptions(slot);
         assertTrue(randomizer.worldState.options.getRandomizeBlocksSize());
         randomizer.worldState.options.applyRandomizerBlocks(CampaignType.SERPULO);
@@ -1033,6 +1052,8 @@ public class ApplicationTests{
         }
         assertTrue(isRandomized);
     }
+
+
 
 //endregion
 }

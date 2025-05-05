@@ -35,6 +35,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.production.Separator;
 import mindustry.world.blocks.production.WallCrafter;
+import mindustry.world.blocks.storage.Unloader;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -126,8 +126,13 @@ public class SlotData {
     public SlotData(){}
 
     public SlotData(String check){
-        if(check.equals("TestBlock")){
-            randomizeBlockSize = true;
+        switch(check){
+            case "test-block":
+                randomizeBlockSize = true;
+                break;
+            case "test-belt":
+                fasterConveyor = true;
+                break;
         }
     }
 
