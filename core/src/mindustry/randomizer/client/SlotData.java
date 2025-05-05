@@ -116,4 +116,12 @@ public class SlotData {
         return this.amountOfResourcesRequired;
     }
 
+    public SlotData(){}
+
+    public SlotData(String check){
+        if(check.equals("TestBlock")){
+            randomizeBlockSize = true;
+        }
+    }
+
 }

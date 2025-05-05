@@ -22,6 +22,12 @@ import mindustry.mod.*;
 import mindustry.mod.Mods.*;
 import mindustry.net.*;
 import mindustry.net.Packets.*;
+import mindustry.randomizer.RandomizedBlocks;
+import mindustry.randomizer.client.SlotData;
+import mindustry.randomizer.enums.ArchipelagoGoal;
+import mindustry.randomizer.enums.CampaignType;
+import mindustry.randomizer.enums.DeathLinkMode;
+import mindustry.randomizer.enums.LogisticsDistribution;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.payloads.*;
@@ -86,6 +92,9 @@ public class ApplicationTests{
                     add(netServer = new NetServer());
 
                     content.init();
+
+                    randomizer.worldState.options.fillOptions(new SlotData());
+                    randomizer.initialize();
 
                     mods.eachClass(Mod::init);
 
@@ -187,7 +196,7 @@ public class ApplicationTests{
 
         assertEquals(string, con.name);
     }
-
+//region AnukenTest
     @Test
     void writeRules(){
         ByteBuffer buffer = ByteBuffer.allocate(1000);
@@ -981,4 +990,49 @@ public class ApplicationTests{
         tile.build.handleStack(item, 1, unit);
         assertEquals(capacity, tile.build.items.get(item));
     }
+//endregion
+
+//region RandomizerTests
+
+    @Test
+    void RandomizerIsDefault(){
+        assertFalse(randomizer.worldState.isVictoryConditionMet());
+        assertFalse(randomizer.worldState.options.getDisableInvasions());
+        assertEquals(CampaignType.SERPULO, randomizer.worldState.options.getCampaign());
+        assertEquals(ArchipelagoGoal.RESOURCES, randomizer.worldState.options.getGoal());
+        assertFalse(randomizer.worldState.options.getDeathLink());
+        assertEquals(DeathLinkMode.UNIT, randomizer.worldState.options.getDeathLinkMode());
+        assertEquals(0, randomizer.worldState.options.getCoreRussianRouletteChambers());
+        assertEquals(LogisticsDistribution.RANDOMIZED, randomizer.worldState.options.getLogisticDistribution());
+        assertFalse(randomizer.worldState.options.getRandomizeCoreUnitsWeapon());
+        assertFalse(randomizer.worldState.options.getRandomizeBlocksSize());
+        assertFalse(randomizer.worldState.options.getMakeEarlyRoadblocksLocal());
+        assertFalse(randomizer.worldState.options.getProgressiveDrills());
+        assertFalse(randomizer.worldState.options.getProgressiveGenerators());
+        assertEquals(2000, randomizer.worldState.options.getAmountOfResourcesRequired());
+
+
+    }
+
+    @Test
+    void allBlockRandomizeTest(){
+        SlotData slot = new SlotData("TestBlock");
+        randomizer.worldState.options.fillOptions(slot);
+        assertTrue(randomizer.worldState.options.getRandomizeBlocksSize());
+        randomizer.worldState.options.applyRandomizerBlocks(CampaignType.SERPULO);
+
+        boolean isRandomized = false;
+
+        for(int i = 0; i < content.blocks().size; i++){
+        Block block = content.block(i);
+            if (RandomizedBlocks.getBlocksSerpulo().stream().anyMatch(b -> b.name.equalsIgnoreCase(block.name))) {
+                if(block.randomizeSize != block.originalSize){
+                    isRandomized = true;
+                }
+            }
+        }
+        assertTrue(isRandomized);
+    }
+
+//endregion
 }

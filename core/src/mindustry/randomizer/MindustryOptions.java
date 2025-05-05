@@ -731,7 +731,7 @@ public class MindustryOptions {
      *
      * @param campaign  The selected campaign.
      */
-    protected static void applyRandomizerBlocks(CampaignType campaign) {
+    public static void applyRandomizerBlocks(CampaignType campaign) {
         Random random = new Random(settings.getInt(AP_SEED.value));
         if (campaign == CampaignType.SERPULO) {
             randomizeAllBlocksSerpulo(random);
