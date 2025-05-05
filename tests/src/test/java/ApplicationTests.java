@@ -33,6 +33,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.ItemBridge;
 import mindustry.world.blocks.payloads.*;
+import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.storage.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
@@ -1011,6 +1012,8 @@ public class ApplicationTests{
         assertEquals(LogisticsDistribution.RANDOMIZED, randomizer.worldState.options.getLogisticDistribution());
         assertFalse(randomizer.worldState.options.getRandomizeCoreUnitsWeapon());
         assertFalse(randomizer.worldState.options.getRandomizeBlocksSize());
+        assertFalse(randomizer.worldState.options.getFasterProduction());
+        assertFalse(randomizer.worldState.options.getFasterConveyor());
         assertFalse(randomizer.worldState.options.getMakeEarlyRoadblocksLocal());
         assertFalse(randomizer.worldState.options.getProgressiveDrills());
         assertFalse(randomizer.worldState.options.getProgressiveGenerators());
@@ -1020,11 +1023,25 @@ public class ApplicationTests{
     }
 
     @Test
+    void fasterProductionTest() {
+        SlotData slot = new SlotData("test-production");
+        randomizer.worldState.options.fillOptions(slot);
+        assertTrue(randomizer.worldState.options.getFasterProduction());
+        randomizer.worldState.options.applyFasterProduction(CampaignType.SERPULO);
+
+        boolean isFaster =
+                (((GenericCrafter) content.block("graphite-press")).outputItem.amount == 2 &&
+                        ((GenericCrafter) content.block("cryofluid-mixer")).outputLiquid.amount == (12f / 60f) * 2);
+
+        assertTrue(isFaster);
+    }
+
+    @Test
     void fasterConveyorSpeedTest() {
-        SlotData slot = new SlotData("test-belt");
+        SlotData slot = new SlotData("test-conveyor");
         randomizer.worldState.options.fillOptions(slot);
         assertTrue(randomizer.worldState.options.getFasterConveyor());
-        randomizer.worldState.options.applySerpuloFasterConveyor();
+        randomizer.worldState.options.applyFasterConveyor(CampaignType.SERPULO);
 
         boolean isFaster =
                 ((Conveyor) content.block("conveyor")).speed == 0.06f &&
@@ -1053,7 +1070,6 @@ public class ApplicationTests{
         assertTrue(isRandomized);
     }
 
-
-
 //endregion
+
 }

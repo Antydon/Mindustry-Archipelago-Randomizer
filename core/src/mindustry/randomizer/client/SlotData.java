@@ -130,8 +130,11 @@ public class SlotData {
             case "test-block":
                 randomizeBlockSize = true;
                 break;
-            case "test-belt":
+            case "test-conveyor":
                 fasterConveyor = true;
+                break;
+            case "test-production":
+                fasterProduction = true;
                 break;
         }
     }

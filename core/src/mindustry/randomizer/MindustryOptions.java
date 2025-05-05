@@ -518,7 +518,7 @@ public class MindustryOptions {
      * Apply the faster production option to the selected campaign.
      * @param campaign The selected campaign.
      */
-    protected static void applyFasterProduction(CampaignType campaign){
+    public static void applyFasterProduction(CampaignType campaign){
         switch (campaign) {
             case SERPULO:
                 applySerpuloFasterProduction();
@@ -538,7 +538,7 @@ public class MindustryOptions {
      * Apply the faster production option to the selected campaign.
      * @param campaign The selected campaign.
      */
-    protected static void applyFasterConveyor(CampaignType campaign){
+    public static void applyFasterConveyor(CampaignType campaign){
         switch (campaign) {
             case SERPULO:
                 applySerpuloFasterConveyor();
@@ -687,7 +687,7 @@ public class MindustryOptions {
     /**
      * Apply the faster conveyor option on Serpulo's research.
      */
-    public static void applySerpuloFasterConveyor() {
+    private static void applySerpuloFasterConveyor() {
         doubleConveyorSpeed(((Conveyor) Blocks.conveyor));
         doubleConveyorSpeed(((Conveyor) Blocks.titaniumConveyor));
         doubleConveyorSpeed(((Conveyor) Blocks.armoredConveyor));
@@ -702,7 +702,7 @@ public class MindustryOptions {
     /**
      * Apply the faster conveyor option on Erekir's research.
      */
-    public static void applyErekirFasterConveyor() {
+    private static void applyErekirFasterConveyor() {
         doubleDuctSpeed(((Duct) Blocks.duct));
         doubleDuctSpeed(((Duct) Blocks.armoredDuct));
         doubleStackConveyorSpeed((StackConveyor) Blocks.surgeConveyor);
